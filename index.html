@@ -1,0 +1,798 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cocoon | Chạm để yêu thương</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&family=Vollkorn:ital,wght@0,500;1,500&family=Nunito:wght@400;700&subset=latin,vietnamese&display=swap" rel="stylesheet">
+<style>
+:root{--cr:#FEFBF4;--tw:#C5A25D;--bk:#1F1C17;--ac:#F3C6D3;--qc:#4A3B32}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--cr);color:var(--bk);font:400 17px/1.6 Nunito,system-ui,sans-serif;padding:env(safe-area-inset-top) 0 calc(76px + env(safe-area-inset-bottom));min-height:100vh}
+h1,h2,h3{font-family:Vollkorn,Georgia,serif;font-style:italic;font-weight:500;line-height:1.3;margin:.4em 0}
+h1{font-size:1.7rem}h2{font-size:1.4rem}h3{font-size:1.15rem}
+.w{max-width:1100px;margin:0 auto;padding:0 18px}
+header{text-align:center;padding:18px 0 6px;color:var(--tw);font-family:Quicksand,sans-serif;font-weight:700;line-height:1}
+header small{display:block;font-size:.85rem}header b{font-size:2rem}header i{display:block;font-style:normal;font-size:.62rem;letter-spacing:.32em;margin-top:4px}
+nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:var(--cr);border-top:1px solid var(--tw);padding-bottom:env(safe-area-inset-bottom);z-index:5}
+nav a{flex:1;min-height:56px;display:flex;align-items:center;justify-content:center;color:var(--bk);text-decoration:none;font-weight:700}
+nav a.on{box-shadow:inset 0 -3px 0 var(--tw)}
+.btn,.btn2{min-height:48px;padding:10px 18px;border-radius:4px;font:700 1rem Nunito,sans-serif;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.btn{background:var(--bk);color:var(--cr);border:0;text-transform:uppercase;letter-spacing:.04em}
+.btn2{background:transparent;color:var(--bk);border:1.5px solid var(--bk)}
+.btn svg{width:22px;height:22px}
+.row{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0}
+.hero{background:var(--ac);border-radius:10px;padding:36px 22px;margin:14px 0}
+.q{font-family:Vollkorn,serif;font-style:italic;font-size:1.5rem;line-height:1.45;color:var(--qc);margin:0}
+.soft,.ok{background:#fff;border-left:4px solid var(--ac);padding:10px 14px;border-radius:4px}
+.auth{border:1px solid var(--tw);border-radius:8px;padding:12px 16px;background:#fff;margin:16px 0}
+.auth summary{cursor:pointer;font-weight:700;min-height:48px;display:flex;align-items:center;gap:8px}
+.auth.bad{border-color:#8a3b2a}dl{display:grid;grid-template-columns:auto 1fr;gap:4px 14px}dt{font-weight:700}dd{margin:0}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;max-width:520px}
+.cal b{text-align:center;font-size:.9rem}
+.day{min-height:48px;border:1px solid #e4dcc9;background:#fff;border-radius:6px;font:inherit;cursor:pointer}
+.day.on{background:var(--ac);font-weight:700}.day.rs{border:2px dashed var(--tw)}.day.td{outline:2px solid var(--bk)}
+.ph{padding:10px 0}.chip{display:inline-block;background:var(--ac);padding:4px 12px;border-radius:99px;font-size:.95rem}
+.two{display:grid;gap:0 36px}
+h4{margin:.9em 0 .1em;font-size:1rem}
+.tip{background:var(--ac);border-radius:8px;padding:6px 18px 14px;margin:18px 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pick{min-height:96px;border:0;border-radius:8px;font:700 1.05rem Nunito;cursor:pointer;color:var(--bk)}
+.modal{position:fixed;inset:0;background:rgba(31,28,23,.55);display:flex;align-items:center;justify-content:center;padding:16px;z-index:20}
+.modal>div{background:var(--cr);border-radius:10px;max-width:480px;width:100%;padding:20px;max-height:90vh;overflow:auto}
+.vid{aspect-ratio:16/9;background:var(--ac);display:flex;align-items:center;justify-content:center;border-radius:8px;font-size:2.4rem}
+textarea{width:100%;min-height:90px;font:inherit}
+footer{text-align:center;font-size:.9rem;padding:24px 18px;color:#5b5446}
+#demo{position:fixed;right:8px;top:8px;z-index:30;background:#fff;border:1px solid var(--bk);border-radius:8px;padding:6px 10px;max-width:260px;font-size:.9rem}
+#demo button{min-height:40px;margin:2px;font:inherit}
+.cf{position:fixed;inset:0;pointer-events:none;z-index:25;overflow:hidden}
+.cf i{position:absolute;top:-12px;width:9px;height:14px;animation:f 2.2s ease-in forwards}
+@keyframes f{to{transform:translateY(105vh) rotate(540deg)}}
+@media(min-width:900px){
+ body{padding-bottom:0}
+ nav{position:static;max-width:1100px;margin:0 auto}
+ .two{grid-template-columns:1fr 1fr}.hero{padding:64px 48px}.q{font-size:1.9rem}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header><small>the</small><b>cocoon</b><i>ORIGINAL VIETNAM</i><em class="slogan">Chạm để yêu thương</em></header>
+<nav id="nav"></nav>
+<main class="w" id="v"></main>
+
+<div id="demo" hidden></div>
+<script>// CẤU HÌNH & NỘI DUNG: nhóm sửa tại đây. Sau này có thể thay bằng API.
+window.COCOON_CONFIG = {
+  AUTH_THRESHOLD: 5, REST_MAX: 2,
+  
+  HOTLINE: `1900 xxxx (minh họa)`, FACTORY: `Cơ sở sản xuất xxxx (minh họa)`,
+  firstMessage: `Hôm nay bạn đã làm rất nhiều rồi, 5 phút này là của riêng bạn`,
+  missed: `Đừng lo nếu lỡ mất một ngày nhé! Chăm sóc bản thân là một hành trình dài, hãy thong thả tiếp tục ngay hôm nay.`,
+  milestones: {
+    7: `7 ngày lắng nghe làn da và mái tóc. Một thói quen nhỏ đã bắt đầu ươm mầm!`,
+    14: `14 ngày kiên trì! Bạn đang chăm sóc bản thân bằng sự dịu dàng và yêu thương nhất.`,
+    30: `30 ngày rạng rỡ! Sự chăm sóc nhẹ nhàng mỗi ngày đã trở thành một phần vẻ đẹp tự nhiên của bạn.`,
+    100: `100 ngày yêu thương trọn vẹn! Bạn không chỉ nuôi dưỡng bản thân mà còn góp phần lan tỏa những giá trị xanh cùng Cocoon.`
+  },
+  safe: `"Thuần chay" không đồng nghĩa chắc chắn "không kích ứng"; khả năng dung nạp phụ thuộc công thức đầy đủ và cơ địa. Nếu da dễ phản ứng, hãy thử ở vùng nhỏ trước và ngừng dùng nếu bị kích ứng.`,
+  messages: [
+    `Hôm nay bạn đã làm rất nhiều rồi, 5 phút này là của riêng bạn`,
+    `Bạn không cần hoàn hảo, chỉ cần dịu dàng với chính mình.`,
+    `Hít một hơi thật sâu. Da và lòng bạn cùng được nghỉ ngơi.`,
+    `Chăm da hôm nay là một cách nói lời cảm ơn với bản thân.`,
+    `Chậm lại một chút cũng không sao.`,
+    `Mỗi ngày một việc nhỏ, đủ để bạn thấy mình được quan tâm.`,
+    `Bạn xứng đáng có một khoảnh khắc êm ái cho riêng mình.`,
+    `Không cần vội. Làn da cũng có nhịp điệu của riêng nó.`,
+    `Hôm nay mệt cũng được, 5 phút này vẫn luôn chờ bạn.`,
+    `Dịu dàng với bản thân là một thói quen đẹp.`,
+    `Cảm ơn bạn đã dành thời gian cho chính mình.`,
+    `Một ngày bận rộn xứng đáng có một lúc bình yên.`,
+    `Bạn đã đi một chặng đường dài, hãy thở nhẹ nhé.`,
+    `Chăm sóc bản thân không phải nghĩa vụ, mà là món quà.`,
+    `Hôm nay, hãy nói với mình một lời thật tử tế.`,
+    `Mọi nhịp độ đều ổn, miễn là bạn lắng nghe chính mình.`,
+    `Nhẹ nhàng thôi, từng chút một là đủ.`,
+    `Bạn đang làm tốt hơn bạn nghĩ.`,
+    `Một cái chạm êm, một khoảnh khắc thuộc về bạn.`,
+    `Hãy để hôm nay kết thúc thật dịu dàng.`,
+    `Không so sánh, không vội vàng, chỉ có bạn và 5 phút bình yên.`,
+    `Bạn được phép nghỉ ngơi.`,
+    `Thương mình hôm nay, mai sẽ nhẹ nhõm hơn một chút.`,
+    `Ngày mới, bắt đầu bằng một việc nhỏ dành cho bạn.`,
+    `Cứ thong thả, hành trình này không cần vội vàng.`,
+    `Lắng nghe cơ thể mình một lúc nhé.`,
+    `Bạn là người đáng được chăm sóc nhất.`,
+    `Hôm nay chưa hoàn hảo cũng không sao, bạn vẫn đáng quý.`,
+    `Một thói quen nhỏ, một tình yêu lớn dành cho chính mình.`,
+    `Cảm ơn bạn vì hôm nay vẫn cố gắng. Giờ là lúc của riêng bạn.`
+  ],
+  products: {
+    bidao: {
+      name: `Bí đao`, accent: "#7FB685", qc: "#2E4A3E",
+      lot: "MAU-BD-0001", nsx: "xx/xx/2026 (minh họa)", hsd: "xx/xx/2029 (minh họa)",
+      title: `Bí đao | Một khởi đầu dịu nhẹ cho da dầu mụn`,
+      quote: `"Thanh mát từng nhịp thở, trả lại sự thoáng sạch dịu lành cho làn da dầu mụn."`,
+      illus: `Gel bí đao rửa mặt.`,
+      who: `Da dầu, dễ nổi mụn: Gel bí đao rửa mặt, làm sạch dầu thừa, duy trì cảm giác ẩm mịn.`,
+      fit: `Da dầu, hỗn hợp thiên dầu và da có mụn đang cần bước làm sạch hằng ngày.`,
+      expect: `Sau rửa mặt: loại bỏ bụi bẩn và dầu thừa, cho ra cảm giác sạch mà không quá khô căng. Khi duy trì đều đặn có thể hỗ trợ chăm sóc da dầu mụn.`,
+      ingLabel: `Thành phần`,
+      ing: `Chiết xuất bí đao; rau má giúp làm dịu; tràm trà; vitamin B3 (niacinamide) hỗ trợ kiểm soát dầu; B5 và betaine hỗ trợ giữ ẩm.`,
+      origin: `Bí đao là nông sản quen thuộc của Việt Nam.`,
+      usage: `Sáng và tối: làm ướt mặt => lấy gel cỡ đồng xu => mát-xa nhẹ, rửa sạch với nước. Xếp ở bước sữa rửa mặt, sau tẩy trang nếu có.`,
+      tipLabel: `Cocoon "mách" bạn`,
+      tip: `Đừng cố chà mạnh để "sạch sâu hơn". Rửa mặt nhẹ nhàng và dưỡng ẩm mới là lựa chọn tuyệt vời cho hàng rào bảo vệ da.`,
+      btns: [{ t: `Xem cách rửa mặt đúng trong 20 giây`, a: "video" }, { t: `Khám phá nguyên liệu bí đao`, a: "go", v: "org" }]
+    },
+    thotnot: {
+      name: `Đường thốt nốt An Giang`, accent: "#D9972B", qc: "#4A3B32",
+      lot: "MAU-TN-0001", nsx: "xx/xx/2026 (minh họa)", hsd: "xx/xx/2029 (minh họa)",
+      title: `Đường thốt nốt An Giang | Dịu ngọt một buổi chăm da`,
+      quote: `"Ngọt ngào mộc mạc từ An Giang, nhẹ nhàng vỗ về và làm mềm mượt từng vùng da."`,
+      illus: `Đường thốt nốt An Giang làm sạch da chết cơ thể 200ml.`,
+      who: `Da cơ thể khô sần: Đường thốt nốt An Giang làm sạch da chết, giúp làn da mềm mượt sau khi tắm.`,
+      fit: `Da cơ thể cần loại bỏ tế bào chết, đặc biệt khi bề mặt khô sần hoặc kém mịn.`,
+      expect: `Cảm nhận bề mặt da mịn hơn sau khi dùng; công thức kết hợp thành phần dưỡng ẩm để giảm cảm giác khô căng.`,
+      ingLabel: `Thành phần`,
+      ing: `Đường thốt nốt; Pentavitin hỗ trợ giữ ẩm; Passioline và Soline từ dầu hạt thực vật. Công thức cũng chứa bột vỏ óc chó, vì vậy nên mát-xa nhẹ tránh làm "đau" da.`,
+      origin: `Gắn với nghề nấu đường truyền thống tại vùng Tịnh Biên và Tri Tôn, An Giang.`,
+      usage: `Làm ướt cơ thể => thoa lượng vừa đủ => mát-xa nhẹ từ cổ xuống chân => tắm sạch. Dùng 2-3 lần/tuần, không cần chà xát mạnh.`,
+      tipLabel: `Bạn biết không?`,
+      tip: `Đường thốt nốt không chỉ hiện diện trong gian bếp. Trong công thức tẩy da chết, những tinh thể nhỏ có thể lấy đi lớp sừng già, và các chất dưỡng ẩm giúp trải nghiệm tắm trở nên dễ chịu hơn bao giờ hết!`,
+      steps: [`Làm ướt cơ thể và thoa lượng vừa đủ`, `Mát-xa nhẹ từ cổ xuống chân`, `Tắm sạch`],
+      btns: [{ t: `Xem 3 bước dùng đúng`, a: "steps" }, { t: `Gặp gỡ An Giang`, a: "go", v: "org" }]
+    },
+    sen: {
+      name: `Sen Hậu Giang`, accent: "#F3C6D3", qc: "#4A3B32",
+      lot: "MAU-SE-0001", nsx: "xx/xx/2026 (minh họa)", hsd: "xx/xx/2029 (minh họa)",
+      title: `Sen Hậu Giang | Một cái chạm êm cho da nhạy cảm`,
+      quote: `"Một cái chạm êm cho da nhạy cảm - Cấp ẩm dịu nhẹ như làn nước đầm sen."`,
+      illus: `Nước sen Hậu Giang 140ml.`,
+      who: `Da nhạy cảm, thiếu ẩm: Nước sen Hậu Giang giúp cấp ẩm và làm dịu trong bước nước dưỡng.`,
+      fit: `Làn da nhạy cảm, dễ khô ráp hoặc cần tăng cường độ ẩm trong routine.`,
+      expect: `Ngay sau bước nước dưỡng: da có cảm giác được bổ sung độ ẩm và làm dịu da.`,
+      ingLabel: `Thành phần đáng nhớ`,
+      ing: `Chiết xuất hoa sen, madecassoside, vitamin B5/B12, beta-glucan và Sweetone. Đây là công thức nhiều thành phần; công dụng không đến từ hoa sen đơn lẻ.`,
+      origin: `Vùng sen ở ấp Bàu Môn, khu vực Hậu Giang, nơi hoa sen được thu hoạch và sơ chế thủ công.`,
+      usage: `Sáng và tối: sau tẩy trang và sữa rửa mặt, đổ một lượng vừa đủ ra lòng bàn tay => thoa và vỗ nhẹ => tiếp tục đến bước serum/kem dưỡng nếu có.`,
+      tipLabel: `Chi tiết rất đáng yêu`,
+      tip: `Nước sen có màu hồng nhạt từ vitamin B12. Sản phẩm gần như không mùi. Do chiết xuất sen hữu cơ có thể xuất hiện kết tủa, bạn lắc đều theo hướng dẫn của hãng trước khi dùng nhé.`,
+      btns: [{ t: `Tìm hiểu làn da nhạy cảm`, a: "video" }, { t: `Nghe chuyện đầm sen Hậu Giang`, a: "go", v: "org" }]
+    },
+    buoi: {
+      name: `Bưởi`, accent: "#A8D8C9", qc: "#2E4A3E",
+      lot: "MAU-BU-0001", nsx: "xx/xx/2026 (minh họa)", hsd: "xx/xx/2029 (minh họa)",
+      title: `Bưởi | Nâng niu mái tóc, từ phần vỏ thơm lành`,
+      quote: `"Nâng niu mái tóc từ hương bưởi thân quen - Cho da đầu khỏe mạnh và mái tóc dày mượt."`,
+      illus: `Nước dưỡng tóc tinh dầu bưởi 140ml/310ml.`,
+      who: `Tóc yếu, dễ gãy rụng: Nước dưỡng tóc tinh dầu bưởi giúp chăm sóc da đầu và tóc với thao tác đơn giản.`,
+      fit: `Tóc yếu, dễ gãy rụng; người muốn bổ sung một bước dưỡng cho da đầu và chân tóc.`,
+      expect: `Dưỡng ẩm da đầu và hỗ trợ chăm sóc tóc yếu.`,
+      ingLabel: `Thành phần đáng nhớ`,
+      ing: `Tinh dầu vỏ bưởi, vitamin B5, Xylishine, Baicapil và bisabolol; nước dưỡng có hai lớp (tinh dầu và dung dịch dưỡng).`,
+      origin: `Tận dụng vỏ bưởi - phần quả giàu tinh dầu, gắn với văn hóa chăm sóc tóc của người Việt`,
+      usage: `LẮC ĐỀU => đưa đầu vòi tiếp xúc da đầu khô, sạch => di chuyển để phủ đều => mát-xa nhẹ. Dùng sáng và tối theo hướng dẫn Cocoon.`,
+      tipLabel: `Điều khiến sản phẩm thú vị`,
+      tip: `Khi nhìn thấy hai lớp trong chai do kết cấu của sản phẩm (lớp tinh dầu và lớp dung dịch dưỡng), bạn hãy lắc đều để phân tán các lớp trước khi thoa. Nếu rụng tóc nhiều, kéo dài hoặc thành mảng, nên tìm tư vấn y tế thay vì chỉ dựa vào sản phẩm chăm sóc tóc.`,
+      btns: [{ t: `Xem cách đặt vòi trực tiếp lên da đầu`, a: "video" }, { t: `Giải mã 2 lớp nước dưỡng`, a: "go", v: "ing" }]
+    }
+  }
+};
+</script>
+<script>window.COCOON_CONTENT = {
+  routine: [
+    { t: `Buổi sáng với bí đao và sen Hậu Giang`, b: [`Bước 1: sử dụng gel rửa mặt bí đao để làm sạch bụi bẩn và dầu thừa.`, `Bước 2: sử dụng nước sen Hậu Giang để bổ sung độ ẩm và làm dịu da.`, `Bước 3: sử dụng kem dưỡng phù hợp rồi mới đến kem chống nắng để bảo vệ da trước khi ra ngoài.`] },
+    { t: `Buổi tối với bí đao và sen Hậu Giang`, b: [`Bước 1: Nước tẩy trang bí đao (khi cần) => gel rửa mặt bí đao.`, `Bước 2: Nước sen Hậu Giang giúp da được cấp ẩm sau một ngày dài.`, `Bước 3: sử dụng kem dưỡng để duy trì độ ẩm qua đêm.`] },
+    { t: `Chăm sóc cơ thể đường thốt nốt An Giang`, b: [`Khi cơ thể còn ướt khi tắm, bạn hãy thoa sản phẩm tẩy da chết đường thốt nốt, mát-xa nhẹ nhàng rồi tắm sạch. Sử dụng 2 - 3 lần/tuần, sau đó thoa dưỡng thể để da thêm mềm mại.`] },
+    { t: `Chăm sóc tóc bằng tinh dầu bưởi`, b: [`Gội sạch tóc với dầu gội bưởi khi cần. Khi tóc và da đầu khô, sạch, bạn lắc đều nước dưỡng tóc tinh dầu bưởi, thoa lên da đầu và mát-xa nhẹ. Sử dụng sáng và tối theo hướng dẫn sản phẩm.`] }
+  ],
+  faq: {
+    intro: `Làn da đẹp không đến từ việc chăm sóc thật nhiều, mà từ việc thấu hiểu và yêu thương làn da đúng cách.`,
+    items: [
+      { q: `Bao lâu để làn da cảm nhận được sự thay đổi?`, a: `Mỗi làn da đều có nhịp điệu riêng! Bạn có thể cảm nhận sự sạch thoáng, mềm mại và ẩm mượt ngay sau khi sử dụng một số sản phẩm. Tuy nhiên, những cải thiện về mụn, dầu thừa hay tình trạng tóc gãy rụng cần thời gian và sự kiên trì. Hãy duy trì routine phù hợp và lắng nghe những thay đổi tích cực mỗi ngày.` },
+      { q: `Da nhạy cảm có thể sử dụng sản phẩm từ thiên nhiên không?`, a: `Nguồn gốc thiên nhiên không đồng nghĩa với việc phù hợp với tất cả mọi làn da. Bí quyết là lựa chọn sản phẩm theo nhu cầu, tìm hiểu kỹ bảng thành phần và thử trên một vùng da nhỏ trước khi sử dụng. Bởi chăm sóc da cũng là hành trình thấu hiểu chính mình.` },
+      { q: `Dùng càng nhiều sản phẩm, hiệu quả càng tốt?`, a: `Không hẳn đâu nhé! Một routine đơn giản nhưng phù hợp đôi khi lại là điều làn da cần nhất. Sử dụng đúng lượng, đúng bước không chỉ giúp chăm sóc da hiệu quả mà còn hạn chế lãng phí. Ít hơn, nhưng đúng hơn, đó mới là bí quyết làm đẹp thông minh!` },
+      { q: `Càng nhiều bọt, càng chà mạnh thì da càng sạch?`, a: `Đây là một hiểu lầm khá phổ biến. Làn da không cần được làm sạch bằng lực mạnh mà cần sự dịu dàng. Thay vì chà xát quá mức, hãy mát-xa nhẹ nhàng, sử dụng sản phẩm theo hướng dẫn và rửa sạch đúng cách. Làm sạch là để nâng niu làn da, không phải thử thách sức chịu đựng của da bạn nhé.` }
+    ]
+  },
+  ideas: [
+    { t: `Mỗi ngày một việc nhỏ`, b: `Tích dấu cho các hành động bạn tự chọn: sử dụng sản phẩm đúng lượng, tái dùng túi đựng, phân loại vỏ chai.`, go: "#lich" },
+    { t: `Thành tựu có thật`, b: `Huy hiệu 7/14/30/100 ngày phản ánh số lần check-in trong hệ thống, bạn có thể lựa chọn biến chúng thành tiền quyên góp cho Hội Phụ nữ hoặc thành voucher nhé.`, go: "#toi" },
+    { t: `Điểm nhấn cuối hành trình`, b: `Nhật ký "thói quen đẹp của tôi"; có thể chia sẻ tùy chọn. Bạn có thể chia sẻ nhật kí ấy lên mạng xã hội và bạn bè.`, wr: 1 }
+  ]
+};
+</script>
+<script>window.COCOON_IMG={"bidao_hero": "img/bidao_hero.webp", "bidao_banner": "img/bidao_banner.webp", "bidao_tex": "img/bidao_tex.webp", "thotnot_hero": "img/thotnot_hero.webp", "thotnot_use": "img/thotnot_use.webp", "thotnot_origin": "img/thotnot_origin.webp", "sen_hero": "img/sen_hero.webp", "sen_origin": "img/sen_origin.webp", "sen_flower": "img/sen_flower.webp", "buoi_hero": "img/buoi_hero.webp", "buoi_use": "img/buoi_use.webp", "buoi_ing": "img/buoi_ing.webp", "brand_visual": "img/brand_visual.webp", "brand_photo": "img/brand_photo.webp", "brand_logo": "img/brand_logo.webp", "csr_green": "img/csr_green.webp", "csr_basket": "img/csr_basket.webp", "csr_heart": "img/csr_heart.webp", "brand_science": "img/brand_science.webp"};</script>
+<script>(function () {
+  const C = window.COCOON_CONFIG, T = window.COCOON_CONTENT, E = { pages: {} }, PK = Object.keys(C.products), g = i => document.getElementById(i);
+  const e = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const css = document.createElement("style");
+  css.textContent = ".sn{position:sticky;top:0;display:flex;overflow-x:auto;gap:8px;background:var(--cr);padding:8px 0;z-index:4}.sn a{white-space:nowrap;padding:8px 14px;border-radius:99px;border:1px solid var(--tw);color:var(--bk);text-decoration:none;min-height:48px;display:flex;align-items:center}.sn a.on{background:var(--ac);font-weight:700}section{scroll-margin-top:72px}.card{background:#fff;border:1px solid #e4dcc9;border-radius:8px;padding:12px 16px;margin:10px 0}.bar{height:14px;background:var(--ac);border-radius:4px;border:1px solid var(--tw)}.f summary{min-height:48px;cursor:pointer;font-weight:700;display:flex;align-items:center}input,select,textarea{font:inherit;min-height:48px;padding:6px 10px;max-width:100%;border:1px solid var(--tw);border-radius:4px;background:#fff}.cols{display:grid;gap:12px}.sn::-webkit-scrollbar{display:none}@media(min-width:900px){.cols{grid-template-columns:1fr 1fr}}";
+  document.head.appendChild(css);
+  const st = S => { S.pts = S.pts || 0; S.ms = S.ms || []; S.gifts = S.gifts || {}; S.rev = S.rev || []; S.freq = S.freq || {}; S.adm = S.adm || "all"; return S; };
+  const CAP = { bidao: 90, thotnot: 30, sen: 100, buoi: 90 }, GRP = { bidao: "mặt", sen: "mặt", thotnot: "cơ thể", buoi: "tóc" };
+  const WITH = { bidao: ["Nước tẩy trang bí đao (khi cần)", "Nước sen Hậu Giang", "kem dưỡng"], sen: ["Gel bí đao rửa mặt", "kem dưỡng", "kem chống nắng"], thotnot: ["dưỡng thể"], buoi: ["dầu gội bưởi"] };
+  const rate = (S, p) => S.freq[p] || (p === "thotnot" ? .4 : 1);
+  const left = (S, p) => Math.ceil(Math.max(0, CAP[p] - (S.chk[p] || []).length) / rate(S, p));
+  const GIFT = `Gửi tặng bạn trọn vẹn sự dịu mát từ thiên nhiên Đất Việt. Mong bạn luôn rạng rỡ, tự tin và yêu thương chính mình theo cách trọn vẹn nhất. Chúc bạn một ngày 20/10 thật ngọt ngào!`;
+  const giftFor = o => o === "Dịp khác" ? GIFT.replace("một ngày 20/10", "một ngày") : GIFT.replace("20/10", o);
+  const ext = n => `<button class="btn2" data-a="ext">${n}</button>`;
+  const Q6 = [["Bạn quan tâm nhất điều gì?", [["Da mặt dầu, dễ nổi mụn", { bidao: 3 }], ["Da mặt nhạy cảm, thiếu ẩm", { sen: 3 }], ["Da cơ thể khô sần", { thotnot: 3 }], ["Tóc yếu, dễ gãy rụng", { buoi: 3 }]]],
+    ["Da hoặc tóc của bạn thuộc loại nào?", [["Da dầu hoặc hỗn hợp thiên dầu", { bidao: 2 }], ["Da khô, dễ căng", { sen: 2, thotnot: 1 }], ["Da đầu cần được dưỡng", { buoi: 2 }], ["Mình chưa chắc", {}]]],
+    ["Da bạn nhạy cảm đến mức nào?", [["Rất dễ phản ứng", { sen: 2 }], ["Thỉnh thoảng", { sen: 1, bidao: 1 }], ["Ít khi", { thotnot: 1, buoi: 1 }]]],
+    ["Bạn muốn chăm sóc vùng nào?", [["Mặt", { bidao: 1, sen: 1 }], ["Cơ thể", { thotnot: 2 }], ["Tóc và da đầu", { buoi: 2 }]]],
+    ["Mỗi ngày bạn có bao nhiêu thời gian cho việc chăm da?", [["Dưới 5 phút", { bidao: 1 }], ["5 đến 10 phút", { sen: 1 }], ["Hơn 10 phút", { thotnot: 1, buoi: 1 }]]],
+    ["Ngân sách của bạn?", [["Tiết kiệm (ít sản phẩm nhất)", { b: 1 }], ["Vừa phải", { b: 2 }], ["Thoải mái", { b: 3 }]]]];
+
+  E.sos = () => '<div class="row"><button class="btn2" data-a="sos">Da mình đang không ổn</button></div>';
+
+  E.pages["san-pham"] = x => {
+    const p = x.sp, o = x.C.products[p], S = st(x.S), R = p === "thotnot" ? [T.routine[2]] : p === "buoi" ? [T.routine[3]] : [T.routine[0], T.routine[1]];
+    const L = [["s1", "Dành cho ai?"], ["s2", "Công dụng thực tế"], ["s3", "Routine cho người mới"], ["s4", "Có thể bạn chưa biết?"], ["s7", "Ý tưởng: 100 ngày đẹp theo cách của bạn"]];
+    const touched = (S.scans[o.lot] || 0) > 0 || (S.chk[p] || []).length > 0;
+    const rv = S.rev.filter(r => r.sp === p).concat([{ u: "Khách hàng", s: 5, t: "Dùng dễ chịu, mình sẽ dùng tiếp.", m: 1 }]);
+    return '<header class="ph" style="text-align:left;color:inherit;font-weight:400;padding:10px 0"><h1>' + o.title + '</h1><p class="q">' + o.quote + '</p><p class="chip">' + o.illus + '</p></header><nav class="sn" id="sn" style="position:sticky;bottom:auto;border:0">' + L.map(l => '<a href="javascript:void(0)" data-a="go" data-v="' + l[0] + '">' + l[1] + "</a>").join("") + "</nav>" +
+      '<section id="s1"><h2>Dành cho ai?</h2><p>' + o.who + "</p><h4>Phù hợp với</h4><p>" + o.fit + '</p></section><section id="s2"><h2>Công dụng thực tế</h2><div class="cols"><div><h4>Bạn có thể kỳ vọng</h4><p>' + o.expect + '</p><h4 id="ing">' + o.ingLabel + "</h4><p>" + o.ing + '</p></div><div><h4 id="org">Nguồn gốc</h4><p>' + o.origin + "</p><h4>Cách dùng</h4><p>" + o.usage + '</p></div></div><aside class="tip"><h3>' + o.tipLabel + "</h3><p>" + o.tip + '</p></aside><div class="row">' + o.btns.map(b => '<button class="btn2" data-a="' + b.a + '" data-v="' + (b.v || "") + '">' + b.t + "</button>").join("") + "</div></section>" +
+      '<section id="s3"><h2>Routine cho người mới</h2>' + R.map(r => '<div class="card"><h3>' + r.t + "</h3>" + r.b.map(l => "<p>" + l + "</p>").join("") + "</div>").join("") + '<h3>Chọn sản phẩm với sự an tâm</h3><p class="soft">' + x.C.safe + "</p></section>" +
+      '<section id="s4"><h2>Có thể bạn chưa biết?</h2><p>' + T.faq.intro + "</p>" + T.faq.items.map(f => '<details class="card f"><summary>' + f.q + "</summary><p>" + f.a + "</p></details>").join("") + "</section>" +
+      '<section id="s7"><h2>Ý tưởng: 100 ngày đẹp theo cách của bạn</h2>' + T.ideas.map(i => '<div class="card"><h3>' + i.t + "</h3><p>" + i.b + "</p>" + (i.wr ? '<button class="btn2" data-a="wrapped">Xem Cocoon Wrapped</button>' : '<a class="btn2" href="' + i.go + '">Mở</a>') + "</div>").join("") + "</section>" +
+      '<section id="rv"><h2>Đánh giá có xác thực</h2>' + rv.map(r => '<div class="card"><b>' + e(r.u) + "</b> " + "★".repeat(r.s) + (r.m ? " <small>Đánh giá mẫu</small>" : ' <small>✔ Đã xác thực mua thật</small>') + "<p>" + e(r.t) + "</p></div>").join("") +
+      (touched ? '<div class="card"><h3>Viết đánh giá của bạn</h3><p><select id="rs"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select> sao</p><p><textarea id="rt" placeholder="Chia sẻ trải nghiệm của bạn" style="width:100%"></textarea></p><p>Ảnh trước <input type="file" accept="image/*" data-prev="pa"> Ảnh sau <input type="file" accept="image/*" data-prev="pb"></p><div id="pa"></div><div id="pb"></div><button class="btn" data-a="rev-save">Gửi đánh giá</button></div>' : '<p class="soft">Bạn cần chạm chip trên sản phẩm thật để viết đánh giá.</p>') + "</section>";
+  };
+
+  E.pages["goi-y"] = x => {
+    const S = st(x.S), p = x.sp, o = x.C.products[p], same = PK.filter(k => k !== p && GRP[k] === GRP[p]), lf = left(S, p), res = S.qres;
+    return "<h1>Gợi ý cho bạn</h1><h3>Sản phẩm cùng công dụng</h3><p>" + (same.length ? same.map(k => x.C.products[k].name).join(", ") : "Hiện chưa có sản phẩm khác trong cùng nhóm chăm sóc " + GRP[p] + ".") + "</p><h3>Nên dùng kèm</h3><p>" + WITH[p].join(", ") + '.</p><div class="card"><h3>Sắp hết và mua lại</h3><p>' + o.name + ": ước tính còn khoảng " + lf + " ngày dùng (ước tính mẫu, dựa trên số lần chăm da và tần suất dùng bạn chọn).</p>" + (lf <= 14 ? '<p class="soft">Sắp hết rồi, bạn có thể mua lại đúng sản phẩm này.</p>' : "") + '<div class="row">' + ["Website", "Shopee", "Hasaki", "Guardian"].map(n => ext("Mua lại " + o.name + " tại " + n)).join("") + '</div><p>Voucher mẫu: MAU-VOUCHER-xxxx (minh họa)</p></div><h3>Trắc nghiệm nhanh</h3>' +
+      Q6.map((q, i) => '<fieldset class="card"><legend>' + q[0] + "</legend>" + q[1].map((a, j) => '<label style="display:flex;gap:8px;min-height:48px;align-items:center"><input type="radio" name="q' + i + '" value="' + j + '">' + a[0] + "</label>").join("") + "</fieldset>").join("") + '<button class="btn" data-a="quiz">Xem routine của mình</button>' +
+      (res ? '<div class="card"><h3>Routine tối giản cho bạn</h3>' + res.map(k => "<p><b>" + x.C.products[k].name + ":</b> " + x.C.products[k].who + "</p>").join("") + "</div>" : "");
+  };
+
+  E.pages.toi = x => {
+    const S = st(x.S), T2 = PK.filter(k => (S.scans[x.C.products[k].lot] || 0) > 0 || (S.chk[k] || []).length);
+    return "<h1>Tôi</h1>" + (S.user ? "<p>Xin chào " + e(S.user.n) + ".</p>" : '<div class="card"><p>Bạn chỉ cần tài khoản khi muốn lưu lâu dài hoặc đổi điểm.</p><button class="btn2" data-a="login">Đăng nhập (mô phỏng)</button></div>') +
+      '<p>Loại da: <select data-skin><option value="">Chưa chọn</option>' + ["Da dầu", "Da hỗn hợp", "Da khô", "Da nhạy cảm"].map(s => "<option" + (S.skin === s ? " selected" : "") + ">" + s + "</option>").join("") + "</select></p><h2>Tủ mỹ phẩm của tôi</h2>" +
+      (T2.length ? T2.map(k => { const o = x.C.products[k], c = S.chk[k] || []; return '<div class="card"><b>' + o.name + "</b><p>Số lần chạm: " + (S.scans[o.lot] || 0) + ". Số ngày đã chăm da: " + c.length + ". Lần gần nhất: " + (c.length ? c.slice().sort().pop() : "chưa có") + ". HSD: " + o.hsd + '.</p><label>Tần suất dùng: <select data-freq="' + k + '"><option value="1">Mỗi ngày</option><option value="0.5"' + (S.freq[k] === .5 ? " selected" : "") + '>3 đến 4 lần/tuần</option><option value="0.2"' + (S.freq[k] === .2 ? " selected" : "") + ">1 đến 2 lần/tuần</option></select></label></div>"; }).join("") : "<p>Chạm chip trên sản phẩm để thêm vào tủ.</p>") +
+      "<h2>Điểm của tôi: " + S.pts + '</h2><div class="row">' + [["Voucher mẫu", 50], ["Quà mini mẫu", 120]].map((r, i) => '<button class="btn2" data-a="redeem" data-v="' + i + '">Đổi ' + r[0] + " (" + r[1] + " điểm)</button>").join("") + '</div><div class="card"><h3>Đổi vỏ chai cũ lấy quà</h3><p>Nhập số vỏ bạn đã gom. Theo chương trình năm 2026: 25 vỏ lớn hoặc 60 vỏ nhỏ đổi một sản phẩm Cocoon mới; 10 vỏ lớn hoặc 25 vỏ nhỏ đổi một túi vải, theo thể lệ.</p>Vỏ lớn <input id="vl" type="number" min="0" value="0" style="width:90px"> Vỏ nhỏ <input id="vn" type="number" min="0" value="0" style="width:90px"> <button class="btn2" data-a="vo">Kiểm tra</button><p id="vor"></p></div><button class="btn" data-a="wrapped">Cocoon Wrapped</button>';
+  };
+
+  E.pages["qua-tang"] = x => {
+    const o = "8/3";
+    return '<h1>Quà tặng</h1><div class="card"><p>Dịp: <select data-occ><option>8/3</option><option>20/10</option><option>Dịp khác</option></select></p><p>Sản phẩm: <select id="gp">' + PK.map(k => '<option value="' + k + '">' + x.C.products[k].name + "</option>").join("") + '</select></p><p><input id="gf" placeholder="Tên người tặng" style="width:100%"></p><p><textarea id="gm" style="width:100%;min-height:150px">' + giftFor(o) + '</textarea></p><button class="btn" data-a="gift-make">Tạo mã quà tặng</button><p id="gc"></p></div><div class="card"><h3>Bạn nhận được mã quà?</h3><input id="gi" placeholder="Nhập mã" style="width:150px"> <button class="btn2" data-a="gift-open">Mở quà</button></div>';
+  };
+
+  const bars = (rows, f) => rows.map(r => '<p style="margin:4px 0">' + r[0] + " (" + Math.round(r[1] * f) + ')</p><div class="bar" style="width:' + Math.round(r[1] * f / 7) + '%;max-width:100%"></div>').join("");
+  E.pages.admin = x => {
+    const S = st(x.S), pr = { all: 1, P1: .45, P2: .35, Shopper: .2 }, f = pr[S.adm], ret = [100, 78, 64, 55, 49, 44, 41], al = Object.keys(S.scans).filter(l => S.scans[l] >= x.C.AUTH_THRESHOLD).map(l => l + ": " + S.scans[l] + " lần quét");
+    return '<h1>Quản trị nội bộ (dữ liệu mẫu)</h1><div class="row">' + ["all", "P1", "P2", "Shopper"].map(k => '<button class="' + (S.adm === k ? "btn" : "btn2") + '" data-a="adm-p" data-v="' + k + '">' + (k === "all" ? "Tất cả" : k) + "</button>").join("") + '</div><div class="cols"><div class="card"><h3>Lượt chạm theo sản phẩm</h3>' + bars([["Bí đao", 420], ["Đường thốt nốt", 310], ["Sen Hậu Giang", 380], ["Bưởi", 290]], f) + '</div><div class="card"><h3>Lượt chạm theo thành phố</h3>' + bars([["Hà Nội", 520], ["TP.HCM", 610], ["Đà Nẵng", 140], ["Cần Thơ", 90]], f) + '</div></div><div class="card"><h3>Tỷ lệ giữ chuỗi (%) tại các mốc ngày 1, 3, 7, 14, 21, 30, 100</h3><svg viewBox="0 0 300 100" width="100%" role="img" aria-label="Tỷ lệ giữ chuỗi"><polyline fill="none" stroke="#C5A25D" stroke-width="3" points="' + ret.map((v, i) => i * 50 + "," + (100 - v)).join(" ") + '"/></svg><p>Điểm rơi rụng lớn nhất: ngày 3 và ngày 7 (mẫu).</p></div><div class="card"><h3>Cảnh báo nghi hàng giả</h3><p>MAU-XX-9999: 14 lần quét (mẫu)</p>' + al.map(a => "<p>" + a + "</p>").join("") + '</div><div class="card"><h3>Kết nối CRM (giả lập)</h3><button class="btn2" data-a="adm-crm">' + (S.crm ? "Đã kết nối (giả lập)" : "Kết nối CRM") + '</button></div><div class="card"><h3>Bộ quote và lời chúc</h3>' + x.C.messages.map((m, i) => '<p><input data-q="' + i + '" value="' + e(m) + '" style="width:80%"> <button class="btn2" data-a="adm-del" data-v="' + i + '">Xóa</button></p>').join("") + '<p><input id="nq" placeholder="Thêm lời chúc mới" style="width:80%"> <button class="btn" data-a="adm-add">Thêm</button></p></div>';
+  };
+
+  let ob; E.after = r => { if (ob) ob.disconnect(); if (r !== "san-pham" || !window.IntersectionObserver) return; ob = new IntersectionObserver(en => en.forEach(n => { if (n.isIntersecting) document.querySelectorAll("#sn a").forEach(a => a.classList.toggle("on", a.dataset.v === n.target.id)); }), { rootMargin: "-20% 0px -70% 0px" }); ["s1", "s2", "s3", "s4", "s7"].forEach(i => { const s = g(i); if (s) ob.observe(s); }); };
+
+  E.onCheckin = (p, n, x) => {
+    const S = st(x.S), t = x.key(x.shift(x.now(), -6)), c = (S.chk[p] || []).filter(d => d >= t).length;
+    if (c > Math.ceil(rate(S, p) * 7) + 1) { x.modal("<p>Bạn đã chăm da nhiều hơn mức dùng ước tính của sản phẩm này, nên lần này mình chưa cộng điểm. Cảm ơn bạn đã quan tâm đến làn da nhé!</p>"); return; }
+    S.pts += 10; const b = { 7: 50, 14: 100, 30: 200, 100: 500 }[n]; if (b && !S.ms.includes(p + n)) { S.ms.push(p + n); S.pts += b; } x.save();
+  };
+
+  const wrapped = x => {
+    const S = st(x.S), all = new Set(); let tot = 0, top = "", mx = 0;
+    PK.forEach(k => { const c = S.chk[k] || []; tot += c.length; c.forEach(d => all.add(d)); if (c.length > mx) { mx = c.length; top = x.C.products[k].name; } });
+    let lg = 0, run = 0, prev = null; Array.from(all).sort().forEach(d => { const dt = new Date(d + "T00:00:00"); run = prev && (dt - prev) / 864e5 === 1 ? run + 1 : 1; prev = dt; lg = Math.max(lg, run); });
+    const smp = !tot; if (smp) { tot = 18; lg = 9; top = "Bí đao"; }
+    E.wmsg = "Cocoon Wrapped: " + tot + " ngày chăm da, chuỗi dài nhất " + lg + " ngày, sản phẩm dùng nhiều nhất là " + top + ". Cảm ơn bạn vì đã dịu dàng với chính mình.";
+    x.modal("<h2>Cocoon Wrapped</h2><p class=\"q\">" + tot + " ngày chăm da. Chuỗi dài nhất: " + lg + " ngày. Sản phẩm dùng nhiều nhất: " + top + ".</p><p>Cảm ơn bạn vì đã dịu dàng với chính mình.</p>" + (smp ? "<small>Dữ liệu mẫu để demo</small>" : "") + '<div class="row"><button class="btn" data-a="wshare">Chia sẻ thiệp</button></div>');
+  };
+  const giftView = (gf, x) => '<h2>Một món quà dành cho bạn</h2><p class="q">' + e(gf.msg) + "</p><p>Từ: " + e(gf.from || "Người tặng") + '</p><p class="soft">' + x.msgOf(x.now()) + "</p>";
+
+  E.act = (a, v, t, x) => {
+    const S = st(x.S), V = i => g(i) && g(i).value;
+    if (a === "ext") x.modal("<p>Liên kết ngoài: [điền link tại đây]</p>");
+    else if (a === "sos") x.modal('<h3>Da mình đang không ổn</h3><p>Mô tả điều bạn thấy, chuyên gia sẽ phản hồi.</p><textarea id="sq" style="width:100%" placeholder="Mô tả tình trạng da của bạn"></textarea><div class="row"><button class="btn" data-a="sos-send">Gửi câu hỏi</button></div><h4>Câu hỏi thường gặp (minh họa)</h4><div class="card"><b>Da đỏ và châm chích sau khi dùng sản phẩm mới, mình nên làm gì?</b><p>Hãy ngừng dùng sản phẩm đó, rửa mặt nhẹ nhàng với nước sạch. Nếu không đỡ, hãy đi khám.</p><small>BS. Nguyễn Văn A (minh họa), Da liễu, Bệnh viện xxxx</small></div><p><small>Đây là tư vấn tham khảo, không thay thế khám bệnh.</small></p>');
+    else if (a === "sos-send") { const urgent = /sưng|đỏ rát|ngứa|phồng|bỏng|khó thở|mẩn|mề đay/i.test(V("sq") || ""); t.closest(".modal > div").innerHTML = "<p>Chúng mình đã nhận câu hỏi của bạn và sẽ phản hồi sớm.</p>" + (urgent ? '<p class="soft">Bạn hãy ngừng dùng sản phẩm đang nghi ngờ và đến cơ sở y tế nếu triệu chứng nặng hơn.</p>' : "") + "<small>Đây là tư vấn tham khảo, không thay thế khám bệnh.</small>" + '<div class="row"><button class="btn2" data-a="close">Đóng</button></div>'; }
+    else if (a === "quiz") { const sc = {}; let b = 2; Q6.forEach((q, i) => { const r = document.querySelector("input[name=q" + i + "]:checked"); if (r) { const w = q[1][+r.value][1]; if (w.b) b = w.b; else PK.forEach(k => { sc[k] = (sc[k] || 0) + (w[k] || 0); }); } }); S.qres = PK.slice().sort((m, n) => (sc[n] || 0) - (sc[m] || 0)).slice(0, b); x.save(); x.render(); }
+    else if (a === "rev-save") { if (!V("rt")) return; S.rev.push({ sp: x.sp, s: +V("rs"), t: V("rt"), u: S.user ? S.user.n : "Bạn" }); x.save(); x.render(); }
+    else if (a === "login") x.modal('<h3>Đăng nhập (mô phỏng)</h3><p><input id="ln" placeholder="Tên" style="width:100%"></p><p><input id="lc" placeholder="Email hoặc số điện thoại" style="width:100%"></p><div class="row"><button class="btn" data-a="login-save">Lưu</button></div>');
+    else if (a === "login-save") { if (!V("ln")) return; S.user = { n: V("ln"), c: V("lc") }; x.save(); document.querySelector(".modal").remove(); x.render(); }
+    else if (a === "redeem") { const R = [["Voucher mẫu", 50], ["Quà mini mẫu", 120]][+v]; if (!S.user) { E.act("login", "", t, x); return; } if (S.pts < R[1]) x.modal("<p>Bạn cần thêm " + (R[1] - S.pts) + " điểm để đổi " + R[0] + ".</p>"); else { S.pts -= R[1]; x.save(); x.render(); x.modal("<p>Đã đổi " + R[0] + " (mô phỏng).</p>"); } }
+    else if (a === "vo") { const l = +V("vl") || 0, n = +V("vn") || 0; g("vor").textContent = l >= 25 || n >= 60 ? "Bạn đủ vỏ để đổi một sản phẩm Cocoon mới." : l >= 10 || n >= 25 ? "Bạn đủ vỏ để đổi một túi vải Cocoon." : "Bạn cần gom thêm vỏ chai để đổi quà nhé."; }
+    else if (a === "wrapped" || a === "d-wrapped") wrapped(x);
+    else if (a === "wshare") x.shareCard(E.wmsg);
+    else if (a === "d-gift") { x.modal(giftView({ msg: giftFor("8/3"), from: "Người tặng (mẫu)" }, x)); }
+    else if (a === "d-admin") location.hash = "#admin";
+    else if (a === "gift-make") { const c = Math.random().toString(36).slice(2, 8).toUpperCase(); S.gifts[c] = { sp: V("gp"), msg: V("gm"), from: V("gf") }; x.save(); g("gc").textContent = "Mã quà tặng của bạn: " + c + ". Người nhận nhập mã này hoặc chạm chip để xem lời nhắn."; }
+    else if (a === "gift-open") { const gf = S.gifts[(V("gi") || "").toUpperCase()]; x.modal(gf ? giftView(gf, x) : "<p>Không tìm thấy mã quà này.</p>"); }
+    else if (a === "adm-p") { S.adm = v; x.save(); x.render(); }
+    else if (a === "adm-crm") { S.crm = !S.crm; x.save(); x.render(); }
+    else if (a === "adm-add") { if (V("nq")) { x.C.messages.push(V("nq")); x.render(); } }
+    else if (a === "adm-del") { x.C.messages.splice(+v, 1); x.render(); }
+    else if (a === "go" && /^s\d$/.test(v)) { const el = g(v); if (el) el.scrollIntoView(); }
+  };
+
+  document.addEventListener("change", ev => {
+    const t = ev.target, x = window.COCOON_CTX && window.COCOON_CTX(), S = x && st(x.S);
+    if (t.dataset.freq) { S.freq[t.dataset.freq] = +t.value; x.save(); }
+    else if (t.dataset.skin !== undefined && t.hasAttribute("data-skin")) { S.skin = t.value; x.save(); }
+    else if (t.hasAttribute("data-occ")) g("gm").value = giftFor(t.value);
+    else if (t.dataset.q) { x.C.messages[+t.dataset.q] = t.value; }
+    else if (t.dataset.prev && t.files[0]) g(t.dataset.prev).innerHTML = '<img alt="Ảnh xem trước" style="max-width:160px;border-radius:6px" src="' + URL.createObjectURL(t.files[0]) + '">';
+  });
+  window.COCOON_EXTRA = E;
+})();
+</script>
+<script>(function () {
+  const C = window.COCOON_CONFIG, E = window.COCOON_EXTRA, P = E.pages, PK = Object.keys(C.products), g = i => document.getElementById(i);
+  const e = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const REAL = { bidao: ["BD26-0512-A01", "12/05/2026", "12/05/2029"], thotnot: ["TN26-0304-B02", "03/04/2026", "03/04/2029"], sen: ["SH26-0320-C03", "20/03/2026", "20/03/2029"], buoi: ["BU26-0415-D04", "15/04/2026", "15/04/2029"] };
+  PK.forEach(k => { const o = C.products[k], r = REAL[k]; o.lot = r[0]; o.nsx = r[1]; o.hsd = r[2]; });
+  C.HOTLINE = '<a href="tel:19009300">1900 9300</a>'; C.FACTORY = "Công ty TNHH Nature Story, KCN Xuyên Á, Đức Lập, Tây Ninh";
+  const BAG = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8a3 3 0 0 1 6 0M12 11v5M9.5 13.5h5"/></svg>';
+  const IC = { "hom-nay": '<circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6 7 7M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4"/>', lich: '<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/>', "san-pham": '<path d="M10 3h4v3l2 3v10a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V9l2-3V3z"/>', "goi-y": '<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5V16h8v-2.5A6 6 0 0 0 12 3z"/>', toi: '<circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/>' };
+  const css = document.createElement("style");
+  css.textContent = `.btn{box-shadow:0 2px 0 rgba(0,0,0,.15)}.big{width:100%;min-height:56px;font-size:1.05rem}header{padding:14px 0 2px}nav{background:rgba(254,251,244,.95);backdrop-filter:blur(8px);box-shadow:0 -4px 18px rgba(31,28,23,.07);border-top:0}nav a{flex-direction:column;gap:2px;font-size:.78rem;color:#6b6354;min-height:62px}nav a.on{color:var(--bk);box-shadow:none}nav a.on svg{color:var(--tw)}.hero{box-shadow:0 8px 24px rgba(31,28,23,.08);border-radius:18px}.hero small{display:block;margin-bottom:10px;font-weight:700;opacity:.7}.card,.auth,.tip{border-radius:14px}.top{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.chip2{background:#fff;border:1px solid #e4dcc9;padding:4px 12px;border-radius:99px;font-size:.95rem}.done{background:#fff;border:1px solid var(--tw);border-radius:14px;padding:14px 16px;font-weight:700}.lnk{background:none;border:0;color:var(--bk);text-decoration:underline;font:inherit;min-height:48px;cursor:pointer}.pg{height:8px;background:#efe8d6;border-radius:99px;overflow:hidden;margin-top:14px}.pg>div{height:100%;background:var(--tw)}.seal{display:inline-flex;flex:none;width:30px;height:30px;border-radius:50%;background:var(--bk);color:var(--cr);align-items:center;justify-content:center}.auth.ok{border-color:var(--tw)}.auth.bad{background:#fff6f3}.auth summary{gap:12px}.qs{display:grid;gap:10px;grid-template-columns:1fr 1fr;margin:16px 0}.qa{display:flex;flex-direction:column;gap:2px;text-align:left;background:#fff;border:1px solid #e4dcc9;padding:14px;border-radius:14px;text-decoration:none;color:var(--bk);font:inherit;cursor:pointer;min-height:92px}.qa b{font-family:Vollkorn,serif;font-style:italic;font-weight:500;font-size:1.12rem}.qa span{font-size:.92rem;color:#5b5446}.qa.dr{grid-column:1/-1;background:var(--ac);border-color:transparent}.stp{list-style:none;padding:0;margin:0;counter-reset:s}.stp li{position:relative;padding:0 0 18px 54px}.stp li:before{counter-increment:s;content:counter(s);position:absolute;left:0;top:0;width:38px;height:38px;border-radius:50%;background:var(--ac);display:flex;align-items:center;justify-content:center;font-weight:700}.stp li:after{content:"";position:absolute;left:18px;top:42px;bottom:2px;width:2px;background:var(--tw);opacity:.5}.stp li:last-child:after{display:none}.chat{display:flex;flex-direction:column;gap:10px;padding:8px 0 16px;min-height:42vh}.b{max-width:86%;padding:10px 14px;border-radius:16px;white-space:pre-wrap}.b.u{align-self:flex-end;background:var(--bk);color:var(--cr);border-bottom-right-radius:4px}.b.k{align-self:flex-start;background:#fff;border:1px solid #e4dcc9;border-bottom-left-radius:4px}.cin{position:sticky;bottom:calc(64px + env(safe-area-inset-bottom));display:flex;gap:8px;background:var(--cr);padding:10px 0}.cin textarea{flex:1;min-height:48px;resize:none}.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px}.chips button{white-space:nowrap}.dr2{display:flex;gap:12px;align-items:center;background:var(--ac);border-radius:14px;padding:12px 16px}a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid var(--tw);outline-offset:2px}@media(min-width:900px){.cin{bottom:0}nav a{flex-direction:row;gap:8px;font-size:1rem;min-height:56px}.qs{grid-template-columns:repeat(3,1fr)}.big{width:auto}}`;
+  document.head.appendChild(css);
+
+  // ---------- Hôm nay (màn hình khi chạm chip) ----------
+  P["hom-nay"] = x => {
+    const S = x.S, p = x.sp, o = C.products[p]; S.off = 0; delete S.demoAuth; x.Verify.count(p);
+    const d = x.now(), k = x.key(d), y = x.key(x.shift(d, -1)), done = x.has(p, k), rd = x.rest(p, k), n = x.streak(p), nx = [7, 14, 30, 100].find(m => m > n) || 0;
+    const rl = C.REST_MAX - (S.rest[p] || []).filter(z => z.slice(0, 7) === k.slice(0, 7)).length;
+    const miss = (S.chk[p] || []).length && !done && !rd && !x.has(p, y) && !x.rest(p, y);
+    const auth = x.Verify.check(p) !== "ok"
+      ? `<div class="auth bad"><strong>Sản phẩm có thể không chính hãng</strong><p>Chip này đã được quét nhiều lần bất thường.</p><button class="btn2" data-a="report">Báo cáo sản phẩm</button><p>Hotline: ${C.HOTLINE}</p></div>`
+      : `<details class="auth ok"${(S.scans[o.lot] || 0) <= 1 ? " open" : ""}><summary><span class="seal">✔</span><span>Chính hãng Cocoon<br><small>${o.illus.replace(/\.$/, "")}</small></span></summary><dl><dt>Số lô</dt><dd>${o.lot}</dd><dt>NSX</dt><dd>${o.nsx}</dd><dt>HSD</dt><dd>${o.hsd}</dd><dt>Cơ sở sản xuất</dt><dd>${C.FACTORY}</dd></dl></details>`;
+    return `<div class="top"><span class="chip">${o.name}</span><span class="chip2">Chuỗi ${n} ngày</span></div>
+<section class="hero"><small>Thông điệp hôm nay</small><p class="q">${x.msgOf(d)}</p></section>
+${done ? '<div class="done">✔ Hôm nay bạn đã chăm da rồi. Hẹn bạn ngày mai nhé.</div>' : rd ? '<div class="done">Hôm nay là ngày nghỉ phép của bạn.</div>' : `<button class="btn big" data-a="checkin">${BAG}Mình đã chăm da xong</button>` + (rl > 0 ? `<p><button class="lnk" data-a="rest">Hôm nay mình cần nghỉ (còn ${rl} ngày nghỉ phép)</button></p>` : "")}
+${nx ? `<div class="pg" role="progressbar" aria-valuenow="${n}" aria-valuemax="${nx}"><div style="width:${Math.round(n / nx * 100)}%"></div></div><p>Còn ${nx - n} ngày nữa đến mốc ${nx} ngày.</p>` : ""}
+${miss ? `<p class="soft">${C.missed}</p>` : ""}${auth}
+<div class="qs"><a class="qa dr" href="#hoi-bac-si"><b>Hỏi đáp cùng Bác sĩ</b><span>Da mình đang không ổn? Hỏi nhanh những câu đơn giản.</span></a><button class="qa" data-a="buy"><b>Mua lại</b><span>Kênh chính hãng</span></button><button class="qa" data-a="share"><b>Lưu thiệp ảnh</b><span>Chia sẻ thông điệp</span></button><a class="qa" href="#qua-tang"><b>Quà tặng</b><span>Gửi lời nhắn riêng</span></a><button class="qa" data-a="lot"><b>Kiểm tra mã</b><span>Nhập mã in trên chai</span></button></div>`;
+  };
+  P._ = () => `<section class="auth bad"><h1>Sản phẩm có thể không chính hãng</h1><p>Mã này không có trong hệ thống của Cocoon. Bạn hãy kiểm tra lại nơi mua, hoặc liên hệ hotline ${C.HOTLINE}.</p><div class="row"><button class="btn" data-a="report">Báo cáo sản phẩm</button><button class="btn2" data-a="lot">Nhập mã in trên chai</button><a class="btn2" href="#hom-nay">Về trang chủ</a></div></section>`;
+
+  // ---------- Hỏi đáp cùng Bác sĩ (AI) ----------
+  const SYS = `Bạn là "Bác sĩ AI của Cocoon", trợ lý mô phỏng bác sĩ da liễu, trả lời câu hỏi đơn giản về chăm sóc da, cơ thể và tóc bằng tiếng Việt có dấu, giọng dịu dàng, mộc mạc, không phán xét. Quy tắc: không chẩn đoán bệnh, không kê đơn thuốc, không hứa hẹn điều trị hay kết quả y khoa; trả lời ngắn (2 đến 5 câu), dễ hiểu; khi nói về sản phẩm Cocoon chỉ dùng thông tin trong dữ liệu được cung cấp, không bịa thành phần hay công dụng; nếu có dấu hiệu nặng hoặc kéo dài (sưng, đỏ rát, phồng rộp, ngứa nhiều, khó thở, rụng tóc thành mảng) hãy khuyên ngừng dùng sản phẩm nghi ngờ và đi khám; không nhận mình là người thật; kết thúc bằng một câu nhắc đây là tư vấn tham khảo, không thay thế khám bệnh.`;
+  const RED = /sưng|phồng|rát|khó thở|mẩn|mề đay|chảy máu|nhiễm trùng|mủ/i, NOTE = "\n\nĐây là tư vấn tham khảo, không thay thế khám bệnh.";
+  const loc = q => (/mụn|dầu/i.test(q) ? "Với da dầu mụn, bạn nên rửa mặt nhẹ nhàng, không chà mạnh và nhớ dưỡng ẩm. Gel bí đao rửa mặt của Cocoon dành cho da dầu và da có mụn." : /nhạy|kích ứng|ngứa|đỏ/i.test(q) ? "Bạn hãy ngừng dùng sản phẩm nghi ngờ, rửa nhẹ với nước sạch và thử sản phẩm mới ở một vùng da nhỏ trước. Nếu không đỡ, hãy đi khám." : /tóc|rụng/i.test(q) ? "Bạn nên lắc đều nước dưỡng tóc tinh dầu bưởi, thoa lên da đầu khô sạch và mát-xa nhẹ. Nếu rụng tóc nhiều, kéo dài hoặc thành mảng, hãy đi khám." : "Mình chưa kết nối được trợ lý lúc này. Bạn có thể hỏi về mụn, da nhạy cảm hoặc tóc rụng, hoặc gọi hotline " + C.HOTLINE + ".") + NOTE;
+  // Muốn gắn bác sĩ thật hoặc API riêng: chỉ cần thay hàm askDoctor này.
+  async function askDoctor(hist, onText) {
+    const sample = window.claude && window.claude.use ? await window.claude.use("sample") : null;
+    if (!sample) return loc(hist[hist.length - 1].t);
+    const data = JSON.stringify(PK.map(k => { const o = C.products[k]; return { ten: o.name, phu_hop: o.fit, thanh_phan: o.ing, cach_dung: o.usage, luu_y: o.tip }; }));
+    const talk = hist.slice(-8).map(m => (m.r === "u" ? "Khách: " : "Bác sĩ: ") + m.t).join("\n");
+    const r = await sample(SYS + "\n\nDữ liệu sản phẩm:\n" + data + "\n\nCuộc trò chuyện:\n" + talk + "\n\nHãy trả lời tin nhắn cuối của khách.", { onText: o => onText(o.text), cache: false });
+    return r.text;
+  }
+  const bub = (r, t) => '<div class="b ' + r + '">' + e(t) + "</div>";
+  let busy = false;
+  async function send(x, text) {
+    text = (text || "").trim(); if (!text || busy) return; busy = true; const S = x.S; S.chat = S.chat || []; S.chat.push({ r: "u", t: text });
+    const box = g("cm"); box.insertAdjacentHTML("beforeend", bub("u", text) + '<div class="b k" id="cur">Đang soạn câu trả lời...</div>'); g("ci").value = ""; window.scrollTo(0, document.body.scrollHeight);
+    let out; try { out = await askDoctor(S.chat, t => { const c = g("cur"); if (c) c.textContent = t; }); } catch (err) { out = err && err.code === "rate_limited" ? "Bạn đợi một chút rồi hỏi tiếp nhé." : loc(text); }
+    if (RED.test(text)) out += "\n\nDấu hiệu bạn mô tả có thể cần được bác sĩ thăm khám trực tiếp. Hãy ngừng dùng sản phẩm nghi ngờ và đến cơ sở y tế nếu không đỡ.";
+    S.chat.push({ r: "b", t: out }); S.chat = S.chat.slice(-20); x.save(); const c = g("cur"); if (c) { c.textContent = out; c.removeAttribute("id"); } busy = false;
+  }
+  P["hoi-bac-si"] = x => {
+    const S = x.S, h = S.chat || [];
+    return `<div class="dr2" style="margin-top:12px"><span class="seal" style="width:44px;height:44px">+</span><div><b>Hỏi đáp cùng Bác sĩ</b><br><small>Bác sĩ AI của Cocoon · Tư vấn tham khảo, không thay thế khám bệnh</small></div></div>
+<div class="chat" id="cm" aria-live="polite">${bub("k", "Chào bạn, mình có thể giúp gì cho làn da hay mái tóc của bạn hôm nay?")}${h.map(m => bub(m.r === "u" ? "u" : "k", m.t)).join("")}</div>
+<div class="chips">${["Da dầu nên rửa mặt mấy lần mỗi ngày?", "Thử sản phẩm mới thế nào cho an toàn?", "Tẩy da chết cơ thể mấy lần một tuần?"].map(q => `<button class="btn2" data-a="chat-q" data-v="${q}">${q}</button>`).join("")}</div>
+<div class="cin"><textarea id="ci" rows="1" placeholder="Nhập câu hỏi của bạn" aria-label="Câu hỏi"></textarea><button class="btn" data-a="chat-send">Gửi</button></div>`;
+  };
+  document.addEventListener("keydown", ev => { if (ev.key === "Enter" && !ev.shiftKey && ev.target.id === "ci") { ev.preventDefault(); send(window.COCOON_CTX(), ev.target.value); } });
+
+  // ---------- Câu chuyện nguyên liệu và CSR ----------
+  const JN = [["Nơi bắt đầu", "Từ những đầm sen dịu dàng ở Hậu Giang, vùng đất thốt nốt An Giang đến những trái bí đao thanh mát và hương bưởi thân quen, mỗi nguyên liệu đều mang trong mình một câu chuyện riêng về thiên nhiên và con người Việt Nam."], ["Điều được nâng niu", "Mỗi nguyên liệu có những đặc tính riêng: bí đao hỗ trợ chăm sóc làn da dầu mụn, sen Hậu Giang mang đến cảm giác dịu nhẹ và ẩm mượt, đường thốt nốt giúp loại bỏ tế bào chết trên cơ thể, còn tinh dầu bưởi góp phần nuôi dưỡng mái tóc. Cocoon khai thác những giá trị ấy để phát triển các công thức chăm sóc sắc đẹp phù hợp với từng nhu cầu."], ["Thành chai sản phẩm - Khi thiên nhiên gặp gỡ khoa học", "Các thành phần thực vật được kết hợp cùng những chất dưỡng ẩm, làm dịu và công nghệ bào chế để hướng đến công dụng cụ thể. Mỗi công thức là sự kết hợp giữa cảm hứng từ thiên nhiên và kiến thức khoa học, hướng đến trải nghiệm làm đẹp hiệu quả"], ["Đến với bạn", "Hành trình ấy không dừng lại khi sản phẩm đến tay bạn, mà tiếp tục trong từng khoảnh khắc chăm sóc bản thân mỗi ngày. Dù là làm sạch da cùng bí đao, cấp ẩm với sen Hậu Giang, chăm sóc cơ thể bằng đường thốt nốt hay nuôi dưỡng mái tóc với tinh dầu bưởi, mỗi lựa chọn phù hợp đều là một cách bạn lắng nghe và yêu thương chính mình."]];
+  const S5 = `<section id="s5"><h2>Câu chuyện nguyên liệu</h2><h3>Vẻ đẹp từ đất Việt - Lan tỏa giá trị xanh</h3><p>Mỗi nguyên liệu là một câu chuyện. Mỗi lựa chọn là một cách yêu thương.</p><p>Bạn có biết, đằng sau mỗi sản phẩm chăm sóc sắc đẹp là cả một hành trình bắt đầu từ thiên nhiên?</p><p>Từ những cánh đồng sen dịu dàng ở Hậu Giang, những trái bí đao thanh mát, vị ngọt mộc mạc của đường thốt nốt An Giang đến hương bưởi thân quen, mỗi nguyên liệu đều mang trong mình nét đẹp riêng của đất Việt.</p><p>Cocoon trân trọng những món quà bình dị ấy, kết hợp cùng nghiên cứu khoa học để tạo nên những sản phẩm chăm sóc da và tóc, giúp bạn nuôi dưỡng vẻ đẹp theo cách tự nhiên và phù hợp với bản thân.</p><p>Bởi với Cocoon, làm đẹp không chỉ là hành trình chăm sóc chính mình, mà còn là cơ hội trân trọng những giá trị bản địa và hướng đến lối sống có trách nhiệm hơn.</p><h3>Hành trình nguyên liệu</h3><ol class="stp">${JN.map(j => `<li><b>${j[0]}</b><p>${j[1]}</p></li>`).join("")}</ol><p class="q">Bởi vẻ đẹp không chỉ nằm ở kết quả, mà còn ở hành trình bạn nâng niu bản thân mỗi ngày.</p><div class="row"><button class="btn2" data-a="ext">Khám phá hành trình từ thiên nhiên đến làn da →</button></div></section>`;
+  const CS = [["Điểm Xanh Online, hãy cho những chiếc vỏ chai một cơ hội mới!", ["Đừng vội nói lời tạm biệt với những chiếc vỏ Cocoon đã dùng hết nha! Vì hành trình của chúng vẫn có thể tiếp tục theo một cách thật đặc biệt.", "Thông qua chương trình Điểm Xanh Online, Cocoon khuyến khích bạn thu gom vỏ chai cũ để đưa vào hoạt động xử lý và tái chế. Bạn có thể quy đổi 25 vỏ lớn hoặc 60 vỏ nhỏ để nhận một sản phẩm Cocoon mới theo thể lệ.", "Một chiếc vỏ được giữ lại, thêm một cơ hội để sống xanh!"], "Khám phá Điểm Xanh Online →"],
+    ["Đổi vỏ chai cũ - Nhận túi xanh xinh!", ["Ai bảo sống xanh là phải làm những điều thật lớn lao nhỉ?", "Chỉ cần giữ lại những chiếc vỏ Cocoon đã sử dụng, làm sạch và mang đến điểm thu hồi, bạn đã có thể góp phần giảm rác thải nhựa rồi đó!", "10 vỏ chai lớn hoặc 25 vỏ chai nhỏ có thể được quy đổi thành một chiếc túi vải Cocoon xinh xắn theo thể lệ.", "Vừa trao cơ hội mới cho những chiếc vỏ cũ, vừa nhận về một người bạn đồng hành đáng yêu!"], "Tìm hiểu cách đổi vỏ chai →"],
+    ["Thu hồi pin cũ", ["Bạn có vài viên pin cũ nằm im trong ngăn kéo? Đừng vội bỏ chúng vào thùng rác sinh hoạt nhé!", "Pin đã qua sử dụng có thể chứa những chất gây hại cho môi trường nếu không được xử lý đúng cách.", "Đó là lý do Cocoon đồng hành cùng Trường Đại học Sư phạm TP.HCM tổ chức chương trình \"Thu hồi pin cũ - Bảo vệ Trái Đất xanh\", khuyến khích mọi người thu gom pin đã sử dụng và mang đến các điểm thu hồi.", "Một viên pin được xử lý đúng cách là thêm một hành động yêu thương dành cho Trái Đất!"], "Khám phá hành trình thu hồi pin cũ →"],
+    ["Ửng hồng không ửng đỏ, gửi dịu dàng đến những đôi má nhỏ", ["Có những mùa đông, điều chúng mình mong muốn không chỉ là được chăm sóc làn da của bản thân, mà còn là mang chút ấm áp đến những em nhỏ vùng cao.", "Thông qua chương trình \"Ửng Hồng Không Ửng Đỏ\", Cocoon đã phối hợp cùng UNESCO-CEP và dự án Em's để lan tỏa sự quan tâm đến trẻ em vùng cao, từ chăm sóc làn da trong mùa lạnh đến hỗ trợ điều kiện học tập và sinh hoạt.", "Đặc biệt, phiên bản giới hạn của sáp dưỡng ẩm sen Hậu Giang còn mang trên mình những nét vẽ đáng yêu từ dự án Em's, gửi gắm câu chuyện về sự sẻ chia và những ước mơ nhỏ bé.", "Bởi đôi khi, vẻ đẹp dịu dàng nhất chính là nụ cười mà chúng ta mang đến cho người khác."], "Khám phá câu chuyện yêu thương →"]];
+  const S6 = `<section id="s6"><h2>Từ yêu thương bản thân đến yêu thương Trái Đất</h2><p>Bạn biết không? Một hành động nhỏ hôm nay cũng có thể góp phần tạo nên những thay đổi thật đẹp cho ngày mai!</p><p>Với Cocoon, hành trình làm đẹp không chỉ dừng lại ở việc chăm sóc làn da hay mái tóc, mà còn là cách chúng mình gửi chút yêu thương đến thiên nhiên, cộng đồng và những điều giản dị xung quanh.</p><p>Cùng khám phá những hoạt động ý nghĩa mà nhà Cocoon đã và đang lan tỏa nhé!</p><div class="cols">${CS.map((c, i) => `<div class="card"><h3>${i + 1}. ${c[0]}</h3>${c[1].map(l => "<p>" + l + "</p>").join("")}<button class="btn2" data-a="ext">${c[2]}</button></div>`).join("")}</div><div class="tip"><h3>Cùng Cocoon gieo thêm những điều tốt đẹp!</h3><p>Chúng mình tin rằng, bạn không cần làm điều gì quá lớn lao để bắt đầu sống xanh. Một chiếc vỏ chai được giữ lại, một viên pin được thu gom đúng cách hay một chút quan tâm dành cho cộng đồng đều có thể trở thành khởi đầu của những thay đổi tích cực.</p><p>Hãy bắt đầu từ những điều nhỏ xinh, bởi khi chúng ta cùng nhau hành động, yêu thương sẽ có cơ hội lan tỏa xa hơn!</p><button class="btn2" data-a="ext">Khám phá các hoạt động cộng đồng của Cocoon →</button></div></section>`;
+  const LB = ["Dành cho ai?", "Công dụng thực tế", "Routine cho người mới", "Có thể bạn chưa biết?", "Câu chuyện nguyên liệu", "Từ yêu thương bản thân đến yêu thương Trái Đất", "Ý tưởng: 100 ngày đẹp theo cách của bạn"];
+  const SN = '<div class="sn" id="sn">' + LB.map((l, i) => '<a role="button" tabindex="0" data-a="go" data-v="s' + (i + 1) + '">' + l + "</a>").join("") + '</div><div class="row"><button class="btn" data-a="buy">' + BAG + "Mua lại — kênh chính hãng</button></div>";
+  const oSP = P["san-pham"];
+  P["san-pham"] = x => oSP(x).replace(/<nav class="sn"[\s\S]*?<\/nav>/, SN).replace('<section id="s7">', S5 + S6 + '<section id="s7">');
+  const oToi = P.toi;
+  P.toi = x => oToi(x) + '<div class="card"><h3>Dữ liệu trên máy này</h3><p>Lịch chăm da, điểm và đánh giá của bạn được lưu ngay trên thiết bị này.</p><button class="btn2" data-a="clear-ask">Xóa dữ liệu của tôi</button></div>';
+
+  // ---------- Hành động ----------
+  const oa = E.act;
+  E.act = (a, v, t, x) => {
+    const S = x.S;
+    if (a === "buy") { const o = C.products[x.sp]; x.modal("<h3>Mua lại " + o.name + '</h3><p>Chọn kênh chính hãng:</p><div class="row">' + ["Website Cocoon", "Shopee", "Hasaki", "Guardian"].map(n => '<button class="btn2" data-a="ext">' + n + "</button>").join("") + "</div><p>Mã ưu đãi cho lần mua lại: CCN-xxxx</p>"); }
+    else if (a === "lot") x.modal('<h3>Kiểm tra mã trên chai</h3><p>Nhập số lô in trên bao bì (ví dụ BD26-0512-A01).</p><p><input id="lotv" placeholder="Số lô" style="width:100%"></p><div class="row"><button class="btn" data-a="lot-check">Kiểm tra</button></div><p id="lotr" aria-live="polite"></p>');
+    else if (a === "lot-check") { const q = (g("lotv").value || "").trim().toUpperCase(), k = PK.find(z => C.products[z].lot === q); g("lotr").innerHTML = k ? '<b>✔ Chính hãng Cocoon:</b> ' + C.products[k].illus.replace(/\.$/, "") + ". NSX " + C.products[k].nsx + ", HSD " + C.products[k].hsd + "." : "<b>Mã không có trong hệ thống.</b> Sản phẩm có thể không chính hãng. Hotline: " + C.HOTLINE + "."; }
+    else if (a === "chat-send") send(x, g("ci").value);
+    else if (a === "chat-q") send(x, v);
+    else if (a === "clear-ask") x.modal('<p>Bạn chắc chắn muốn xóa toàn bộ dữ liệu trên máy này?</p><div class="row"><button class="btn" data-a="wipe">Xóa dữ liệu</button></div>');
+    else if (a === "wipe") { Object.keys(S).forEach(z => delete S[z]); S.chk = {}; S.rest = {}; S.scans = {}; S.off = 0; x.save(); const m = document.querySelector(".modal"); if (m) m.remove(); x.render(); }
+    else if (a === "wrapped" && !PK.some(k => (S.chk[k] || []).length)) x.modal("<h3>Cocoon Wrapped</h3><p>Hãy chăm da vài ngày để mở bản tổng kết của riêng bạn nhé.</p>");
+    else oa(a, v, t, x);
+  };
+
+  // ---------- Thanh điều hướng có biểu tượng, thanh mục dính ----------
+  let ob;
+  E.after = (r, x) => {
+    x.S.off = 0;
+    const tabs = [["hom-nay", "Hôm nay"], ["lich", "Lịch"], ["san-pham", "Sản phẩm"], ["goi-y", "Gợi ý"], ["toi", "Tôi"]], nav = g("nav"); nav.hidden = false;
+    nav.innerHTML = tabs.map(tb => '<a href="#' + tb[0] + '"' + (tb[0] === r || (tb[0] === "hom-nay" && (C.products[r] || r === "hoi-bac-si")) ? ' class="on" aria-current="page"' : "") + '><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + IC[tb[0]] + "</svg>" + tb[1] + "</a>").join("");
+    if (ob) ob.disconnect(); if (r !== "san-pham" || !window.IntersectionObserver) return;
+    ob = new IntersectionObserver(en => en.forEach(n => { if (n.isIntersecting) { const a = document.querySelector('#sn a[data-v="' + n.target.id + '"]'); document.querySelectorAll("#sn a").forEach(z => z.classList.toggle("on", z === a)); if (a && a.scrollIntoView) a.scrollIntoView({ inline: "center", block: "nearest" }); } }), { rootMargin: "-20% 0px -70% 0px" });
+    for (let i = 1; i <= 7; i++) { const s = g("s" + i); if (s) ob.observe(s); }
+  };
+})();
+</script>
+<script>(function () {
+  const C = window.COCOON_CONFIG, T = window.COCOON_CONTENT, E = window.COCOON_EXTRA, P = E.pages, IMG = window.COCOON_IMG || {}, PK = Object.keys(C.products), g = i => document.getElementById(i);
+  const e = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const im = (k, alt, cls) => IMG[k] ? '<img class="' + (cls || "") + '" src="' + IMG[k] + '" alt="' + e(alt || "") + '" loading="lazy" decoding="async">' : "";
+  const FULL = { bidao: "Gel bí đao rửa mặt 310ml", thotnot: "Túi Refill Đường Thốt Nốt An Giang Làm Sạch Da Chết Cơ Thể 200ML", sen: "Nước sen Hậu Giang 500ml", buoi: "Nước dưỡng tóc tinh dầu bưởi Pomelo hair tonic 140ml" };
+  const SHORT = { bidao: "Bí đao", thotnot: "Thốt nốt An Giang", sen: "Sen Hậu Giang", buoi: "Bưởi" };
+  PK.forEach(k => { const o = C.products[k]; o.quote = o.quote.replace(/^"(.*)"$/, "“$1”"); o.full = FULL[k]; o.illus = FULL[k] + "."; o.name = SHORT[k]; });
+  C.products.buoi.usage = C.products.buoi.usage.replace("Dùng sáng và tối theo hướng dẫn Cocoon.", "Dùng khoảng 2-3 lần/tuần.");
+  T.routine[3].b = [T.routine[3].b[0].replace("Sử dụng sáng và tối theo hướng dẫn sản phẩm.", "Sử dụng khoảng 2 - 3 lần/tuần.")];
+
+  const cp = C.products, ST2 = { bidao: ["Làm ướt mặt", "Lấy gel cỡ đồng xu, mát-xa nhẹ", "Rửa sạch với nước"], buoi: ["LẮC ĐỀU", "Đưa đầu vòi tiếp xúc da đầu khô, sạch", "Di chuyển để phủ đều", "Mát-xa nhẹ"] };
+  cp.bidao.btns = [{ t: "Xem cách rửa mặt đúng trong 20 giây", a: "steps2" }, cp.bidao.btns[1]]; cp.sen.btns = [{ t: "Tìm hiểu làn da nhạy cảm", a: "go", v: "s4" }, cp.sen.btns[1]]; cp.buoi.btns = [{ t: "Xem cách đặt vòi trực tiếp lên da đầu", a: "steps2" }, cp.buoi.btns[1]];
+  const PLAN = { d: ["Mỗi ngày", 1, 7], a: ["3-4 lần/tuần", 2, 4], b: ["2-3 lần/tuần", 3, 3], c: ["1-2 lần/tuần", 5, 2] }, DEF = { bidao: "d", sen: "d", thotnot: "b", buoi: "b" };
+  const MS = [7, 14, 30, 100], BONUS = { 7: 50, 14: 100, 30: 200, 100: 500 };
+  const LAD = { 7: "VOUCHER MUA HÀNG 5%", 14: "VOUCHER SPA", 30: "VOUCHER MUA HÀNG 10%", 100: "VOUCHER SPA CAO CẤP" };
+  const SITE = "https://cocoonvietnam.com/", BUY = { bidao: "gel-bi-dao-rua-mat-310ml", thotnot: "tui-refill-duong-thot-not-an-giang-lam-sach-da-chet-co-the-200-ml", sen: "nuoc-sen-hau-giang-500ml", buoi: "nuoc-duong-toc-tinh-dau-buoi-140ml-1" }, buyUrl = p => SITE + "san-pham/" + BUY[p];
+  const LK = { "Khám phá Điểm Xanh Online →": SITE + "bai-viet/diem-xanh-online-cung-cocoon-song-xanh-moi-ngay-2026", "Tìm hiểu cách đổi vỏ chai →": SITE + "bai-viet/chuong-trinh-thu-hoi-vo-chai-doi-tui-xanh-nam-2026", "Khám phá hành trình thu hồi pin cũ →": SITE + "bai-viet/chuong-trinh-thu-hoi-pin-cu-nam-2025", "Khám phá các hoạt động cộng đồng của Cocoon →": SITE + "bai-viet/tags/cocoon" };
+  const BAG = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8a3 3 0 0 1 6 0M12 11v5M9.5 13.5h5"/></svg>';
+  const st = S => { S.chk = S.chk || {}; S.guard = S.guard || {}; S.gdays = S.gdays || []; S.plan = S.plan || {}; S.cab = S.cab || []; S.ms = S.ms || []; S.claim = S.claim || []; S.pts = S.pts || 0; return S; };
+  const dd = k => new Date(k + "T00:00:00"), df = (a, b) => Math.round((dd(a) - dd(b)) / 864e5);
+  const plan = (S, p) => S.plan[p] || DEF[p];
+  function run(S, p, t) {
+    const ds = [...new Set((S.chk[p] || []).concat(S.guard[p] || []))].sort(); if (!ds.length) return { n: 0, alive: false, has: false };
+    const m = PLAN[plan(S, p)][1], L = ds[ds.length - 1]; if (df(t, L) > m) return { n: 0, alive: false, has: true };
+    let i = ds.length - 1; while (i > 0 && df(ds[i], ds[i - 1]) <= m) i--; return { n: df(L, ds[i]) + 1, alive: true, has: true };
+  }
+  function seed(x) { // lịch sử khởi tạo: Thốt nốt 0, Sen 30, Bí đao 7, Bưởi 20 ngày
+    const S = st(x.S); if (S.v2 || E.noSeed) return; S.v2 = 1; const b = n => x.key(x.shift(x.now(), -n)), r = n => Array.from({ length: n }, (_, i) => b(i + 1));
+    S.chk = { bidao: r(7), sen: r(30), buoi: [1, 4, 7, 10, 13, 16, 18, 20].map(b), thotnot: [] }; S.guard = {}; S.gdays = []; S.cab = PK.slice(); S.plan = {}; S.ms = []; S.pts = 0;
+    PK.forEach(p => { S.pts += S.chk[p].length * 10; const n = run(S, p, x.key(x.now())).n; MS.forEach(m => { if (n >= m) { S.ms.push(p + m); S.pts += BONUS[m]; } }); }); x.save();
+  }
+  let tt; const toast = (h, ms) => { let t = g("toast"); if (!t) { t = document.createElement("div"); t.id = "toast"; t.setAttribute("role", "status"); document.body.appendChild(t); } t.innerHTML = h; t.style.display = "block"; clearTimeout(tt); tt = setTimeout(() => { t.style.display = "none"; }, ms || 4000); };
+  function burst() { if (matchMedia("(prefers-reduced-motion:reduce)").matches) return; const b = document.createElement("div"); b.className = "cf"; for (let i = 0; i < 26; i++) { const s = document.createElement("i"); s.style.cssText = "left:" + Math.random() * 100 + "%;background:" + ["#C5A25D", "#F3C6D3", "#7FB685", "#D9972B"][i % 4] + ";animation-delay:" + Math.random() * .4 + "s"; b.appendChild(s); } document.body.appendChild(b); setTimeout(() => b.remove(), 2600); }
+  const mapUrl = r => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("điểm thu hồi vỏ chai Cocoon " + r);
+
+  function calHtml(x) {
+    const S = st(x.S), d = x.now(), b = new Date(d.getFullYear(), d.getMonth() + (E.cm || 0), 1), y = b.getFullYear(), m = b.getMonth(), len = new Date(y, m + 1, 0).getDate(), off = (b.getDay() + 6) % 7, tk = x.key(d); let h = "";
+    for (let i = 0; i < off; i++) h += "<i></i>";
+    for (let i = 1; i <= len; i++) { const k = x.key(new Date(y, m, i)), dots = PK.filter(p => x.has(p, k)), gu = PK.some(p => (S.guard[p] || []).includes(k)); h += '<button class="cd' + (k === tk ? " td" : "") + (k > tk ? " fu" : "") + '" data-a="cday" data-v="' + k + '" aria-label="Ngày ' + i + '"><b>' + i + "</b><span>" + dots.map(p => '<u style="background:' + C.products[p].accent + '"></u>').join("") + (gu ? "<s></s>" : "") + "</span></button>"; }
+    return '<div class="cal-h"><button class="btn2" data-a="cal-p" aria-label="Tháng trước">‹</button><h2>Tháng ' + (m + 1) + "/" + y + '</h2><button class="btn2" data-a="cal-n" aria-label="Tháng sau"' + ((E.cm || 0) >= 0 ? " disabled" : "") + '>›</button></div><div class="cal">' + ["T2", "T3", "T4", "T5", "T6", "T7", "CN"].map(z => "<em>" + z + "</em>").join("") + h + "</div>";
+  }
+
+  P["hom-nay"] = x => {
+    seed(x); const S = st(x.S), sp = x.sp, o = C.products[sp], d = x.now(), k = x.key(d); x.Verify.count(sp);
+    const R = {}; PK.forEach(p => { R[p] = run(S, p, k); });
+    const done = p => x.has(p, k), dn = ["Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy"][d.getDay()];
+    const left = C.REST_MAX - S.gdays.filter(z => z.slice(0, 7) === k.slice(0, 7)).length, dueG = S.cab.filter(p => R[p].alive && !done(p) && !(S.guard[p] || []).includes(k));
+    if (!E.sel || E.sel.k !== k) E.sel = { k, set: new Set(S.cab.filter(p => p === sp && !done(p))) };
+    const warn = x.Verify.check(sp) !== "ok" ? '<div class="auth bad"><b>Sản phẩm có thể không chính hãng</b><p>Chip này đã được quét nhiều lần bất thường. Hotline: ' + C.HOTLINE + '</p><button class="btn2" data-a="report">Báo cáo sản phẩm</button></div>' : '<a class="bdg" href="#san-pham"><span class="seal">✔</span><span class="bt">Chính hãng Cocoon<small>Lô ' + o.lot + "</small></span><em>Chi tiết ›</em></a>";
+    const chips = S.cab.map(p => { const c = C.products[p], dd2 = done(p); return '<button class="chip-t' + (dd2 ? " dn" : "") + '" data-a="chk-t" data-v="' + p + '" aria-pressed="' + (dd2 || E.sel.set.has(p)) + '"' + (dd2 ? " disabled" : "") + '><i style="background:' + c.accent + '"></i><span>' + c.name + "</span><em>" + (dd2 ? "Đã ghi hôm nay" : PLAN[plan(S, p)][0]) + "</em></button>"; }).join("");
+    const nx = n => MS.find(m => m > n) || 0;
+    const rows = PK.map(p => { const c = C.products[p], r = R[p], n2 = nx(r.n); return '<div class="sr"><i style="background:' + c.accent + '"></i><div><b>' + c.name + "</b><small>" + PLAN[plan(S, p)][0] + "</small>" + (n2 ? '<div class="pg"><div style="width:' + Math.round(r.n / n2 * 100) + '%"></div></div><small>Còn ' + (n2 - r.n) + " ngày tới mốc " + n2 + "</small>" : "<small>Đã qua mốc 100 ngày</small>") + "</div><strong>" + r.n + "<small> ngày</small></strong></div>"; }).join("");
+    const all = new Set(); PK.forEach(p => (S.chk[p] || []).forEach(z => all.add(z)));
+    const bestN = Math.max.apply(null, PK.map(p => R[p].n)), earned = MS.filter(m => PK.some(p => S.ms.includes(p + m)));
+    const ladder = MS.map(m => { const cl = S.claim.find(c => c.m === m), ok = earned.includes(m); return '<div class="lad' + (ok ? " ok" : "") + '"><b>' + m + " ngày</b><span>" + LAD[m] + "</span>" + (cl ? "<em>Mã " + cl.code + "</em>" : ok ? '<button class="btn2" data-a="claim" data-v="' + m + '">Nhận quà</button>' : "<em>Còn " + (m - bestN) + " ngày</em>") + "</div>"; }).join("");
+    const red = [["VOUCHER MUA HÀNG", 200], ["VOUCHER SPA", 300], ["Quà mini", 120]].map((r, i) => '<div class="rd"><b>' + r[0] + "</b><span>" + r[1] + ' điểm</span><button class="btn2" data-a="redeem2" data-v="' + i + '">Đổi</button></div>').join("");
+    return (!S.cab.includes(sp) ? '<div class="soft">Thêm ' + o.name + ' vào tủ của bạn để theo dõi Streak. <button class="lnk" data-a="cab-add" data-v="' + sp + '">Thêm vào tủ</button></div>' : "") + warn +
+      '<section class="th"><div class="th-m"><p class="eyebrow">' + dn + ", " + d.getDate() + " tháng " + (d.getMonth() + 1) + '</p><p class="q">' + x.msgOf(d) + '</p><div class="row"><button class="btn2" data-a="share">Lưu thiệp ảnh</button></div></div><div class="th-i">' + im(sp + "_hero", o.full) + "<span>" + o.full + "</span></div></section>" +
+      '<section class="ck"><h2>Hôm nay bạn đã dùng gì?</h2><div class="chips-t">' + chips + "</div>" + (S.cab.length && S.cab.every(done) ? '<div class="done">✔ Hôm nay bạn đã chăm da xong. Hẹn bạn ngày mai nhé.</div>' : S.cab.length ? '<button class="btn big" data-a="chk-all">' + BAG + 'Mình đã chăm da xong <span id="cn">(' + E.sel.set.size + ")</span></button>" : "") +
+      (dueG.length && left > 0 ? '<p><button class="lnk" data-a="guard">Hôm nay mình cần nghỉ: dùng Bảo vệ Streak (còn ' + left + " lượt tháng này)</button></p>" : "") + (R[sp].has && !R[sp].alive ? '<p class="soft">' + C.missed + "</p>" : "") + "</section>" +
+      '<section class="lc" id="lc"><div class="cal-w">' + calHtml(x) + '</div><div class="stat"><p class="eyebrow">Số ngày đã tích lũy</p><p class="big-n">' + all.size + "<small> ngày chăm da</small></p>" + rows + "</div></section>" +
+      '<section class="rw"><h2>Quà của bạn</h2><div class="pts"><p class="eyebrow">Điểm hiện có</p><p class="big-n">' + S.pts + '</p></div><h3>Quà theo Streak</h3><div class="ladder">' + ladder + '</div><h3>Đổi điểm lấy quà</h3><div class="reds">' + red + "</div>" +
+      '<div class="card"><h3>Đổi vỏ chai cũ lấy quà</h3><p>25 vỏ lớn hoặc 60 vỏ nhỏ đổi một sản phẩm Cocoon mới khi gửi online. 10 vỏ lớn hoặc 25 vỏ nhỏ đổi một túi xanh tại Điểm Xanh.</p><p>Vỏ lớn <input id="vl" type="number" min="0" value="0" style="width:90px"> Vỏ nhỏ <input id="vn" type="number" min="0" value="0" style="width:90px"> <button class="btn2" data-a="vo">Kiểm tra</button></p><p id="vor" aria-live="polite"></p><div class="row"><a class="btn2" href="https://tinyurl.com/CocoonTHVC2026" target="_blank" rel="noopener">Xem danh sách Điểm Xanh</a><a class="btn2" href="' + SITE + 'bai-viet/diem-xanh-online-cung-cocoon-song-xanh-moi-ngay-2026" target="_blank" rel="noopener">Đổi vỏ chai online</a></div></div><a class="btn2" href="#qua-tang">Tặng quà</a></section>';
+  };
+  P.lich = P["hom-nay"];
+
+  const oSP = P["san-pham"], GAL = { bidao: ["bidao_tex", "p"], thotnot: ["thotnot_use", "sq"], sen: ["sen_origin", "p"], buoi: ["buoi_use", "sq"] }, ING = { bidao: ["bidao_banner", ""], thotnot: ["thotnot_origin", "p"], sen: ["sen_flower", ""], buoi: ["buoi_ing", "p"] };
+  P["san-pham"] = x => {
+    let h = oSP(x); const p = x.sp, o = C.products[p], ok = x.Verify.check(p) === "ok";
+    const auth = ok ? '<div class="auth ok"><div class="au-h"><span class="seal">✔</span><div><b>Chính hãng Cocoon</b><small>Đã xác thực khi bạn chạm chip</small></div></div><dl><dt>Số lô</dt><dd>' + o.lot + "</dd><dt>NSX</dt><dd>" + o.nsx + "</dd><dt>HSD</dt><dd>" + o.hsd + "</dd><dt>Cơ sở sản xuất</dt><dd>" + C.FACTORY + '</dd></dl><button class="lnk" data-a="lot">Nhập mã in trên chai để kiểm tra</button></div>' : '<div class="auth bad"><b>Sản phẩm có thể không chính hãng</b><p>Hotline: ' + C.HOTLINE + '</p><button class="btn2" data-a="report">Báo cáo sản phẩm</button></div>';
+    const top = '<section class="ptop"><div class="pt-l"><p class="eyebrow">' + o.full + "</p><h1>" + o.title + '</h1><p class="q">' + o.quote + "</p>" + auth + '</div><div class="pt-r">' + im(p + "_hero", o.full) + "</div></section>";
+    h = h.replace(/<header class="ph"[\s\S]*?<\/header>/, top).replace(/<div class="row"><button class="btn" data-a="buy">[\s\S]*?<\/button><\/div>/, "");
+    h = h.replace('<section id="s2"><h2>Công dụng thực tế</h2>', '<section id="s2"><h2>Công dụng thực tế</h2>' + im(GAL[p][0], o.name, "fg " + GAL[p][1]));
+    h = h.replace('<section id="s5"><h2>Câu chuyện nguyên liệu</h2>', '<section id="s5"><h2>Câu chuyện nguyên liệu</h2>' + im("brand_visual", "Cocoon Vietnam", "fg") + im(ING[p][0], o.name, "fg " + ING[p][1]));
+    h = h.replace('</ol><p class="q">Bởi vẻ đẹp', "</ol>" + im("brand_science", "Thiên nhiên gặp khoa học", "fg") + '<p class="q">Bởi vẻ đẹp');
+    h = h.replace('<div class="card"><h3>1. ', '<div class="card">' + im("csr_green", "Điểm Xanh Online", "fg") + "<h3>1. ").replace('<div class="card"><h3>2. ', '<div class="card">' + im("csr_basket", "Thu gom vỏ chai", "fg sq") + "<h3>2. ").replace('<div class="card"><h3>4. ', '<div class="card">' + im("csr_heart", "Một tình yêu", "fg") + "<h3>4. ");
+    h = h.replace('<div class="card"><h3>3. ', '<div class="card"><div class="fg cvr" role="img" aria-label="Thu hồi pin cũ"><svg viewBox="0 0 64 64" width="72" height="72" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="20" width="42" height="24" rx="5"/><path d="M50 28h5v8h-5M20 32h12M26 26v12"/></svg><b>Thu hồi pin cũ</b><span>Bảo vệ Trái Đất xanh</span></div><h3>3. ');
+    h = h.replace(/<button class="btn2" data-a="ext">([^<]*)<\/button>/g, (m, l) => LK[l] ? '<a class="btn2" href="' + LK[l] + '" target="_blank" rel="noopener">' + l + "</a>" : "").replace(/<div class="row"><\/div>/g, "");
+    return h;
+  };
+
+  const FAQ = [
+    ["Gel bí đao rửa mặt dùng thế nào cho đúng?", "Bạn dùng vào buổi sáng và tối, ở bước sữa rửa mặt (sau tẩy trang nếu có). Làm ướt mặt bằng nước sạch, lấy lượng gel cỡ đồng xu, tạo bọt nhẹ trong lòng bàn tay rồi mát-xa theo vòng tròn nhỏ, chú ý vùng chữ T nơi dễ đổ dầu.\nRửa lại nhiều nước cho tới khi da hết cảm giác trơn, thấm khô bằng khăn mềm bằng cách ấn nhẹ, không lau mạnh. Sau đó dưỡng ẩm ngay, vì da dầu vẫn cần được cấp ẩm.\nĐiều quan trọng nhất là đừng cố chà mạnh để \"sạch sâu hơn\". Rửa mặt dịu nhẹ và dưỡng ẩm đủ mới giúp hàng rào bảo vệ da ổn định."],
+    ["Da mình hay nổi mụn, nên chăm sóc thế nào?", "Mụn có nhiều nguyên nhân như dầu thừa, bụi bẩn, thay đổi nội tiết, thiếu ngủ hay thói quen nặn mụn, nên không có sản phẩm nào làm hết mụn ngay. Những việc thực tế giúp da dễ chịu hơn là rửa mặt hai lần mỗi ngày với sản phẩm dịu nhẹ, dưỡng ẩm đủ, chống nắng khi ra ngoài, thay vỏ gối và khăn mặt thường xuyên, và không nặn hay sờ tay lên mụn.\nGel bí đao rửa mặt dành cho da dầu, da có mụn, hỗ trợ làm sạch dầu thừa. Khi dùng đều đặn, sản phẩm có thể hỗ trợ chăm sóc da dầu mụn, nhưng cần thời gian và sự kiên trì.\nNếu mụn viêm đỏ, đau, mụn bọc, để lại sẹo hoặc kéo dài, bạn nên đi khám da liễu để được tư vấn điều trị phù hợp."],
+    ["Da đầu của mình có gàu, dùng nước dưỡng tóc tinh dầu bưởi được không?", "Nước dưỡng tóc tinh dầu bưởi Pomelo hair tonic được thiết kế để dưỡng ẩm da đầu và hỗ trợ chăm sóc tóc yếu, dễ gãy rụng. Đây không phải sản phẩm điều trị gàu hay bệnh da đầu.\nGàu có thể đến từ da đầu khô, tiết dầu nhiều hoặc vi nấm, nên cách xử lý mỗi trường hợp khác nhau. Bạn nên gội đầu đều đặn, gội sạch bọt, tránh gãi mạnh và tránh để da đầu bị bí.\nNếu da đầu ngứa nhiều, gàu bong thành mảng, đỏ rát hoặc kéo dài dù đã gội đều, hãy đi khám da liễu thay vì chỉ dựa vào sản phẩm chăm sóc tóc. Khi da đầu đang trầy xước hoặc rát, bạn không nên thoa nước dưỡng lên vùng đó."],
+    ["Da nhạy cảm có dùng được sản phẩm từ thiên nhiên không?", "Nguồn gốc thiên nhiên không đồng nghĩa với việc phù hợp với mọi làn da, và \"thuần chay\" cũng không đồng nghĩa chắc chắn \"không kích ứng\". Khả năng dung nạp phụ thuộc vào công thức đầy đủ và cơ địa của bạn.\nVới da nhạy cảm, bạn nên tìm hiểu kỹ bảng thành phần, mỗi lần chỉ thêm một sản phẩm mới, thử ở một vùng da nhỏ trước, và ngừng dùng nếu thấy đỏ, ngứa hay châm chích.\nNước sen Hậu Giang hướng tới làn da nhạy cảm, thiếu ẩm: giúp cấp ẩm và làm dịu trong bước nước dưỡng."],
+    ["Thử sản phẩm mới ở vùng da nhỏ như thế nào cho an toàn?", "Bạn chọn một vùng da mỏng, ít cọ xát như sau tai hoặc mặt trong cẳng tay, thoa một lượng nhỏ và để yên khoảng 24 giờ (da rất nhạy có thể theo dõi tới 48 giờ).\nNếu thấy đỏ, ngứa, rát hay nổi mẩn, hãy rửa sạch bằng nước và ngừng dùng. Nếu da vẫn bình thường, bạn thử tiếp trên một vùng nhỏ ở mặt rồi dùng dần dần. Không phải phản ứng nào cũng xuất hiện ngay, nên hãy theo dõi vài ngày đầu.\nChỉ nên thử một sản phẩm mới mỗi lần để biết chính xác sản phẩm nào khiến da phản ứng."],
+    ["Tẩy da chết cơ thể mấy lần một tuần, dùng sao cho đúng?", "Bạn dùng khoảng 2-3 lần mỗi tuần, không cần chà xát mạnh. Khi cơ thể còn ướt trong lúc tắm, thoa lượng vừa đủ, mát-xa nhẹ từ cổ xuống chân rồi tắm sạch.\nCông thức có bột vỏ óc chó, vì vậy hãy mát-xa nhẹ để tránh làm đau da. Bạn nên tránh vùng da đang trầy xước, cháy nắng hoặc đang viêm. Nếu thấy da đỏ rát, hãy giảm số lần dùng.\nSau khi tắm, thoa dưỡng thể để da thêm mềm mại và đỡ khô căng."],
+    ["Bao lâu thì mình thấy da, tóc thay đổi?", "Mỗi làn da có nhịp điệu riêng. Cảm giác sạch thoáng, mềm mại hay ẩm mượt có thể đến ngay sau khi dùng một số sản phẩm. Còn cải thiện về mụn, dầu thừa hay tình trạng tóc gãy rụng cần thời gian và sự kiên trì.\nBạn có thể chụp ảnh da hoặc tóc cùng một góc, cùng ánh sáng mỗi hai tuần để tự theo dõi. Hãy duy trì routine phù hợp và lắng nghe những thay đổi nhỏ mỗi ngày thay vì kỳ vọng kết quả quá nhanh."],
+    ["Mình rụng tóc nhiều, khi nào cần đi khám?", "Rụng một ít tóc mỗi ngày là bình thường, nhưng nếu bạn thấy tóc rụng nhiều bất thường, kéo dài nhiều tuần, thưa đi rõ rệt hoặc rụng thành mảng, bạn nên đi khám để tìm nguyên nhân. Da đầu ngứa, đau, đỏ hay có vảy cũng là dấu hiệu nên được bác sĩ thăm khám.\nSản phẩm chăm sóc tóc chỉ hỗ trợ dưỡng ẩm da đầu và chăm sóc tóc yếu, không thay thế việc khám và điều trị. Bạn có thể dùng nước dưỡng tóc tinh dầu bưởi khoảng 2-3 lần mỗi tuần: lắc đều, đặt đầu vòi lên da đầu khô, sạch rồi mát-xa nhẹ."],
+    ["Mình mới bắt đầu chăm da, nên dùng bao nhiêu sản phẩm?", "Ít hơn nhưng đúng hơn là cách an toàn nhất. Buổi sáng bạn có thể rửa mặt, dùng nước dưỡng, rồi kem dưỡng và kem chống nắng. Buổi tối thì tẩy trang khi cần, rửa mặt, nước dưỡng và kem dưỡng để giữ ẩm qua đêm.\nHãy thêm sản phẩm mới từng chút một, cách nhau vài ngày, để biết da hợp với sản phẩm nào. Dùng đúng lượng và đúng bước cũng giúp bạn đỡ lãng phí."]
+  ];
+  const faqHtml = () => { const ai = !!(window.claude && window.claude.use); return '<section class="faq"><h2>Câu hỏi thường gặp</h2>' + FAQ.map(f => '<details class="card f"><summary>' + f[0] + "</summary>" + f[1].split("\n").map(z => "<p>" + z + "</p>").join("") + (ai ? '<button class="btn2" data-a="chat-q" data-v="' + e(f[0]) + '">Hỏi thêm bác sĩ về câu này</button>' : "") + "</details>").join("") + "</section>"; };
+  const CHIPS = '<div class="chips">' + ["Gel bí đao dùng thế nào?", "Da nổi mụn nên làm gì?", "Da đầu có gàu thì sao?", "Da nhạy cảm dùng được không?", "Hàng thật kiểm tra sao?", "Streak và quà hoạt động thế nào?"].map(q => '<button class="btn2" data-a="chat-q" data-v="' + e(q) + '">' + q + "</button>").join("") + "</div>";
+  const oDr = P["hoi-bac-si"];
+  P["hoi-bac-si"] = x => oDr(x).replace(/<div class="chips">[\s\S]*?<\/div>/, CHIPS) + faqHtml();
+
+  const PROB = { mun: ["Da dầu, dễ nổi mụn", "bidao"], nhay: ["Da nhạy cảm, thiếu ẩm", "sen"], toc: ["Tóc yếu, dễ gãy rụng", "buoi"], kho: ["Da cơ thể khô sần", "thotnot"], gau: ["Da đầu có gàu", ""] };
+  const og = P["goi-y"];
+  P["goi-y"] = x => {
+    const S = st(x.S); let h = og(x).replace(/<div class="card"><h3>Sắp hết và mua lại<\/h3>[\s\S]*?Voucher mẫu: [^<]*<\/p><\/div>/, "");
+    h = h.replace("<h1>Gợi ý cho bạn</h1>", im("brand_photo", "Cocoon Việt Nam", "fg") + '<h1>Gợi ý cho bạn</h1><h2>Bạn đang gặp vấn đề gì?</h2><div class="chips-t pr">' + Object.keys(PROB).map(k => '<button class="chip-t" data-a="prob" data-v="' + k + '"><span>' + PROB[k][0] + "</span></button>").join("") + "</div>").replace("<h3>Sản phẩm cùng công dụng</h3>", "<h3>Cùng chu trình</h3>");
+    h = h.replace("<h3>Trắc nghiệm nhanh</h3>", '<details class="card f"><summary>Cần tư vấn thêm? Làm trắc nghiệm nhanh (tùy chọn)</summary><p class="sm">Bốn câu đầu cần trả lời để gợi ý sát hơn.</p>').replace('<button class="btn" data-a="quiz">Xem routine của mình</button>', '<button class="btn" data-a="quiz">Xem routine của mình</button></details>');
+    if (S.qres) { const bl = []; S.qres.forEach(k => { if (k === "bidao" || k === "sen") bl.push(0, 1); else bl.push(k === "thotnot" ? 2 : 3); }); h += '<section class="card"><h3>Thứ tự dùng cho bạn</h3>' + [...new Set(bl)].map(i => "<h4>" + T.routine[i].t + "</h4>" + T.routine[i].b.map(l => "<p>" + l + "</p>").join("")).join("") + "</section>"; }
+    return h;
+  };
+
+  const ot = P.toi;
+  P.toi = x => {
+    const S = st(x.S), h = ot(x), k = x.key(x.now());
+    const head = h.split("<h2>Tủ mỹ phẩm")[0].replace("Đăng nhập (mô phỏng)", "Đăng ký / Đăng nhập").replace("Bạn chỉ cần tài khoản khi muốn lưu lâu dài hoặc đổi điểm.", "Tạo tài khoản để nhận quà theo Streak và giữ lịch chăm da khi đổi máy."), tail = h.slice(h.indexOf('<button class="btn" data-a="wrapped">'));
+    const cab = S.cab.map(p => { const o = C.products[p], r = run(S, p, k); return '<div class="cb">' + im(p + "_hero", o.full, "th2") + "<div><b>" + o.full + "</b><p>Streak " + r.n + " ngày · HSD " + o.hsd + '</p><label>Kế hoạch dùng <select data-plan="' + p + '">' + Object.keys(PLAN).map(z => '<option value="' + z + '"' + (plan(S, p) === z ? " selected" : "") + ">" + PLAN[z][0] + "</option>").join("") + "</select></label></div></div>"; }).join("");
+    const more = PK.filter(p => !S.cab.includes(p)).map(p => '<button class="btn2" data-a="cab-add" data-v="' + p + '">+ ' + C.products[p].name + "</button>").join("");
+    return head + "<h2>Tủ mỹ phẩm của tôi</h2>" + (cab || "<p>Chạm chip trên sản phẩm để thêm vào tủ.</p>") + (more ? '<p>Thêm sản phẩm vào tủ:</p><div class="row">' + more + "</div>" : "") + '<h2>Streak cùng bạn bè</h2><div class="card"><p>Mời bạn cùng chăm da và cùng giữ Streak. Khi bạn bè tham gia, hai người cùng nhận lời động viên, không có bảng xếp hạng hay so sánh.</p><button class="btn" data-a="invite">Mời bạn bè</button></div>' + tail;
+  };
+
+  const oa = E.act;
+
+  // ---- Hỏi đáp tự động: trả lời ngay từ bộ câu có sẵn, không cần Claude ----
+  const fa = i => FAQ[i][1].split("\n").join("\n\n"), rt = i => T.routine[i].b.join("\n");
+  const KB = [
+    { k: ["streak", "bao ve streak", "check in", "diem danh", "lo mot ngay", "bo lo mot ngay", "quen cham da"], a: 'Mỗi lần bạn bấm "Mình đã chăm da xong" là một ngày chăm da được ghi lại. Streak là số ngày bạn giữ được kế hoạch dùng của từng sản phẩm. Thốt nốt và Bưởi dùng khoảng 2-3 lần/tuần nên bạn không cần check mỗi ngày.\n\nNếu lỡ một ngày, bạn đừng lo nhé: chăm sóc bản thân là một hành trình dài, hãy thong thả tiếp tục ngay hôm nay. Khi cần nghỉ, bạn dùng Bảo vệ Streak (tối đa 2 lượt mỗi tháng) để Streak vẫn được giữ.' },
+    { k: ["voucher", "diem thuong", "tich diem", "doi qua", "nhan qua", "qua theo streak", "quy doi diem"], a: 'Mỗi lần check-in bạn nhận 10 điểm. Khi đạt mốc 7, 14, 30 và 100 ngày, bạn được thưởng thêm điểm và mở khóa voucher mua hàng hoặc voucher spa.\n\nBạn đổi điểm và nhận voucher ở khối "Quà của bạn" ngay trên trang Hôm nay. Bạn cần đăng ký tài khoản để nhận và đổi quà.' },
+    { k: ["vo chai", "doi vo", "tui xanh", "diem xanh", "thu hoi", "tai che"], a: 'Bạn giữ lại vỏ Cocoon đã dùng hết và làm sạch. Gom 25 vỏ lớn hoặc 60 vỏ nhỏ để đổi một sản phẩm Cocoon mới khi gửi online (Điểm Xanh Online). Gom 10 vỏ lớn hoặc 25 vỏ nhỏ để đổi một túi xanh tại điểm thu hồi.\n\nTrong khối "Quà của bạn" ở trang Hôm nay có nút "Xem danh sách Điểm Xanh" để bạn tìm nơi đổi gần mình.' },
+    { k: ["hang that", "hang gia", "chinh hang", "kiem tra ma", "so lo", "nfc", "quet ma", "gia mao", "xac thuc", "chip"], a: 'Mỗi lần bạn chạm chip trên chai, thẻ "Chính hãng Cocoon" hiện số lô, ngày sản xuất, hạn sử dụng. Bạn cũng có thể nhập số lô in trên bao bì vào ô "Nhập mã in trên chai để kiểm tra" ở đầu trang Sản phẩm.\n\nNếu hiện cảnh báo "Sản phẩm có thể không chính hãng", bạn nên ngừng dùng, kiểm tra lại nơi mua và liên hệ hotline 1900 9300. Để yên tâm hơn, bạn nên mua tại website chính thức cocoonvietnam.com.' },
+    { k: ["mua o dau", "mua lai", "dat hang", "mua hang", "gia bao nhieu", "bao nhieu tien"], a: 'Bạn bấm nút "Mua lại" ở góc phải màn hình để mở đúng trang sản phẩm trên website chính thức cocoonvietnam.com. Giá và khuyến mãi được cập nhật trực tiếp tại đó.' },
+    { k: ["hotline", "lien he", "so dien thoai", "tong dai", "cham soc khach hang"], a: 'Bạn có thể gọi hotline Cocoon 1900 9300 hoặc xem thông tin tại cocoonvietnam.com. Nếu da có dấu hiệu bất thường, hãy đến bác sĩ da liễu để được thăm khám.' },
+    { k: ["mang thai", "co bau", "cho con bu", "dang bau"], a: 'Mình không thể xác nhận một sản phẩm có phù hợp khi mang thai hay cho con bú. Bạn nên mang bảng thành phần trên bao bì đến hỏi bác sĩ sản khoa hoặc bác sĩ da liễu trước khi dùng.' },
+    { k: ["tre em", "tre nho", "con toi", "cho be", "tuoi dung"], a: 'Tài liệu sản phẩm không có thông tin dành cho trẻ nhỏ. Bạn nên hỏi bác sĩ nhi khoa hoặc bác sĩ da liễu trước khi dùng cho trẻ.' },
+    { k: ["han su dung", "hsd", "bao quan", "het han"], a: 'Bạn xem hạn sử dụng in trên bao bì hoặc ở thẻ "Chính hãng Cocoon" sau khi chạm chip. Bạn nên bảo quản sản phẩm ở nơi khô mát, tránh ánh nắng trực tiếp và đóng nắp kín sau khi dùng.' },
+    { k: ["thu tu", "buoi sang", "buoi toi", "sang va toi", "routine sang", "routine toi", "dung truoc", "dung sau"], a: "Buổi sáng:\n" + rt(0) + "\n\nBuổi tối:\n" + rt(1) },
+    { k: ["chong nang"], a: "Buổi sáng, bạn dùng kem dưỡng phù hợp rồi mới đến kem chống nắng để bảo vệ da trước khi ra ngoài." },
+    { k: ["nuoc sen", "sen hau giang", "madecassoside", "beta glucan", "sweetone", "mau hong", "ket tua"], a: "Nước sen Hậu Giang 500ml có chiết xuất hoa sen, madecassoside, vitamin B5/B12, beta-glucan và Sweetone. Đây là công thức nhiều thành phần nên công dụng không đến từ hoa sen đơn lẻ.\n\nNước có màu hồng nhạt từ vitamin B12 và gần như không mùi. Do chiết xuất sen hữu cơ có thể xuất hiện kết tủa, bạn lắc đều theo hướng dẫn của hãng trước khi dùng.\n\nBạn dùng sáng và tối: sau tẩy trang và sữa rửa mặt, đổ một lượng vừa đủ ra lòng bàn tay, thoa và vỗ nhẹ, rồi tiếp tục serum hoặc kem dưỡng nếu có." },
+    { k: ["thanh phan bi dao", "niacinamide", "tram tra", "rau ma", "vitamin b3"], a: "Gel bí đao rửa mặt 310ml có chiết xuất bí đao; rau má giúp làm dịu; tràm trà; vitamin B3 (niacinamide) hỗ trợ kiểm soát dầu; B5 và betaine hỗ trợ giữ ẩm." },
+    { k: ["hai lop", "2 lop", "lac deu", "tinh dau vo buoi", "xylishine", "baicapil", "bisabolol", "tach lop", "pomelo", "hair tonic"], a: "Nước dưỡng tóc tinh dầu bưởi Pomelo hair tonic có tinh dầu vỏ bưởi, vitamin B5, Xylishine, Baicapil và bisabolol. Sản phẩm có hai lớp (tinh dầu và dung dịch dưỡng) nên bạn cần lắc đều để phân tán các lớp trước khi thoa.\n\nBạn đặt đầu vòi lên da đầu khô, sạch, di chuyển để phủ đều rồi mát-xa nhẹ, khoảng 2-3 lần mỗi tuần." },
+    { k: ["da kho", "thieu am", "kho rap", "cap am", "kho cang"], a: "Da khô, thiếu ẩm cần được cấp ẩm đều đặn: rửa mặt dịu nhẹ, dùng nước dưỡng rồi kem dưỡng để giữ ẩm qua đêm, và tránh rửa quá nhiều hoặc chà mạnh. Nước sen Hậu Giang giúp cấp ẩm và làm dịu trong bước nước dưỡng.\n\nNếu da bong tróc nhiều, đỏ hoặc ngứa kéo dài, bạn nên đi khám da liễu." },
+    { k: ["kich ung", "do da", "chau chich", "ngua"], a: "Nếu da hơi đỏ, châm chích hoặc ngứa sau khi dùng sản phẩm mới, bạn nên ngừng dùng, rửa nhẹ bằng nước sạch và để da nghỉ vài ngày. Muốn dùng lại, bạn thử ở một vùng da nhỏ trước khi dùng cả mặt.\n\nNếu triệu chứng nặng lên hoặc kéo dài, hãy đi khám da liễu." },
+    { k: ["gel bi dao", "rua mat bi dao", "dung gel", "cach rua mat", "rua mat dung", "bi dao dung"], a: fa(0) },
+    { k: ["da ddau", " gau ", "ngua da ddau", "bong da ddau"], a: fa(2) },
+    { k: ["rung toc", "toc rung", "toc yeu", "gay rung", "nuoc duong toc", "toc thua"], a: fa(7) },
+    { k: ["tay da chet", "thot not", "da chet co the", "bot vo oc cho", "tui refill"], a: fa(5) },
+    { k: ["thu vung da", "patch test", "thu san pham moi", "thu o vung nho", "thu tren da"], a: fa(4) },
+    { k: ["da nhay cam", "thien nhien", "thuan chay", "an toan khong"], a: fa(3) },
+    { k: ["bao lau", "khi nao thay", "co hieu qua", "hieu qua khong", "thay doi"], a: fa(6) },
+    { k: ["moi bat dau", "nguoi moi", "bao nhieu san pham", "nen dung may", "routine"], a: fa(8) },
+    { k: ["noi mun", " mun ", "da mun", "bi mun", "tri mun", "da dau", "dau thua", "mun boc", "mun viem"], a: fa(1) },
+    { k: ["cam on", "thanks", "xin chao", "hello", " chao ", " hi "], a: "Cảm ơn bạn đã trò chuyện! Bạn cần hỏi thêm về cách dùng, thành phần, da mụn, da nhạy cảm hay tóc rụng, mình luôn sẵn sàng." }
+  ];
+  const nz = t => " " + t.toLowerCase().normalize("NFD").replace(/đ/g, "dd").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, " ") + " ";
+  const REDF = /sung|phong rop|kho tho|me day|chay mau|nhiem trung|chay mu|dau rat|man do|noi man|ngua nhieu/;
+  const REDA = "Dấu hiệu bạn mô tả có thể cần được bác sĩ thăm khám trực tiếp. Bạn hãy ngừng dùng sản phẩm đang nghi ngờ, rửa nhẹ vùng da bằng nước sạch (không chà xát) và đến cơ sở y tế hoặc bác sĩ da liễu sớm.\n\nNếu có khó thở, sưng môi hoặc mặt, hãy đi cấp cứu ngay. Khi đi khám, bạn nên mang theo sản phẩm hoặc ảnh bảng thành phần để bác sĩ tham khảo.";
+  const NOHIT = "Mình chưa có câu trả lời sẵn cho câu này. Bạn thử hỏi về cách dùng từng sản phẩm, da mụn, da nhạy cảm, gàu, rụng tóc, thành phần, thứ tự routine sáng và tối, hoặc Streak và quà.\n\nCần tư vấn trực tiếp thì bạn gọi hotline 1900 9300, và nếu da có dấu hiệu bất thường hãy đến bác sĩ da liễu.";
+  function localAnswer(q) {
+    const t = nz(q); if (REDF.test(t)) return REDA; let best = null, bs = 0;
+    KB.forEach(it => { let sc = 0; it.k.forEach(w => { if (t.indexOf(w) >= 0) sc += w.length > 6 ? 2 : 1; }); if (sc > bs) { bs = sc; best = it; } });
+    return bs >= 2 ? best.a : null;
+  }
+  let busy2 = false;
+  async function chat(x, text, a, v, t) {
+    text = (text || "").trim(); if (!text || busy2) return;
+    const hit = localAnswer(text), ai = !!(window.claude && window.claude.use);
+    if (!hit && ai) { oa(a, v, t, x); return; }
+    busy2 = true; const S = x.S; S.chat = S.chat || []; S.chat.push({ r: "u", t: text });
+    const box = g("cm"); box.insertAdjacentHTML("beforeend", '<div class="b u">' + e(text) + '</div><div class="b k" id="cur2">Đang soạn câu trả lời...</div>'); const inp = g("ci"); if (inp) inp.value = "";
+    window.scrollTo(0, document.body.scrollHeight); await new Promise(r => setTimeout(r, 550));
+    const out = hit || NOHIT; S.chat.push({ r: "b", t: out }); S.chat = S.chat.slice(-20); x.save();
+    const c = g("cur2"); if (c) { c.textContent = out; c.removeAttribute("id"); } busy2 = false;
+  }
+  document.addEventListener("keydown", ev => { if (ev.key === "Enter" && !ev.shiftKey && ev.target.id === "ci") { ev.preventDefault(); ev.stopImmediatePropagation(); chat(window.COCOON_CTX(), ev.target.value, "chat-send", "", null); } }, true);
+  E.act = (a, v, t, x) => {
+    const S = st(x.S), k = x.key(x.now());
+    if (a === "chk-t") { if (E.sel.set.has(v)) E.sel.set.delete(v); else E.sel.set.add(v); t.setAttribute("aria-pressed", E.sel.set.has(v)); const n = g("cn"); if (n) n.textContent = "(" + E.sel.set.size + ")"; }
+    else if (a === "chk-all") {
+      const picks = [...E.sel.set].filter(p => !x.has(p, k)); if (!picks.length) { toast("Hãy chọn ít nhất một sản phẩm bạn đã dùng."); return; }
+      const snap = { pts: S.pts, ms: S.ms.slice(), picks, k }, t7 = x.key(x.shift(x.now(), -6)); let noPts = false, nm = 0, gain = 0;
+      picks.forEach(p => { const c = (S.chk[p] || []).filter(z => z >= t7).length; (S.chk[p] = S.chk[p] || []).push(k); if (c > PLAN[plan(S, p)][2]) noPts = true; else { S.pts += 10; gain += 10; } const n = run(S, p, k).n; MS.forEach(m => { if (n >= m && !S.ms.includes(p + m)) { S.ms.push(p + m); S.pts += BONUS[m]; nm = Math.max(nm, m); } }); });
+      E.sel = null; E.undo = snap; x.save(); x.render();
+      toast("Đã ghi " + picks.length + " sản phẩm." + (noPts ? " Lần này mình chưa cộng điểm vì bạn đã dùng nhiều hơn kế hoạch tuần này." : " +" + gain + " điểm.") + ' <button data-a="undo">Hoàn tác</button>', 10000);
+      if (nm) { burst(); x.modal("<h2>Mốc " + nm + ' ngày</h2><p class="q">' + C.milestones[nm] + '</p><p class="soft">Bạn đã mở khóa ' + LAD[nm] + ".</p>"); }
+    }
+    else if (a === "undo" && E.undo) { const u = E.undo; u.picks.forEach(p => { S.chk[p] = (S.chk[p] || []).filter(z => z !== u.k); }); S.pts = u.pts; S.ms = u.ms; E.undo = null; x.save(); const tg = g("toast"); if (tg) tg.style.display = "none"; x.render(); }
+    else if (a === "guard") { const due = S.cab.filter(p => run(S, p, k).alive && !x.has(p, k)); due.forEach(p => { (S.guard[p] = S.guard[p] || []).push(k); }); S.gdays.push(k); x.save(); x.render(); toast("Đã dùng 1 lượt Bảo vệ Streak. Nghỉ một chút cũng không sao, Streak của bạn vẫn được giữ."); }
+    else if (a === "cal-p") { E.cm = (E.cm || 0) - 1; x.render(); }
+    else if (a === "cal-n") { E.cm = Math.min(0, (E.cm || 0) + 1); x.render(); }
+    else if (a === "cday") { const d = dd(v), ps = PK.filter(p => x.has(p, v)); x.modal("<h3>" + d.getDate() + "/" + (d.getMonth() + 1) + '</h3><p class="q">' + x.msgOf(d) + "</p>" + (ps.length ? "<p>Hôm đó bạn đã dùng: " + ps.map(p => C.products[p].name).join(", ") + ".</p>" : "<p>Ngày này chưa có lần chăm da nào được ghi.</p>")); }
+    else if (a === "claim") { if (!S.user) { E.act("login", "", t, x); return; } const code = "CCN-" + Math.random().toString(36).slice(2, 6).toUpperCase(); S.claim.push({ m: +v, code }); x.save(); x.render(); x.modal("<h3>" + LAD[+v] + '</h3><p class="q">Mã của bạn: ' + code + "</p>"); }
+    else if (a === "redeem2") { const R = [["VOUCHER MUA HÀNG", 200], ["VOUCHER SPA", 300], ["Quà mini", 120]][+v]; if (!S.user) { E.act("login", "", t, x); return; } if (S.pts < R[1]) x.modal("<p>Bạn cần thêm " + (R[1] - S.pts) + " điểm để đổi " + R[0] + ".</p>"); else { S.pts -= R[1]; x.save(); x.render(); x.modal("<h3>" + R[0] + '</h3><p class="q">Mã: CCN-' + Math.random().toString(36).slice(2, 6).toUpperCase() + "</p>"); } }
+    else if (a === "login") x.modal('<h3>Đăng ký để giữ Streak và nhận quà</h3><p>Thông tin chỉ lưu trên thiết bị này.</p><p><input id="ln" placeholder="Tên của bạn" style="width:100%"></p><p><input id="lc" placeholder="Email hoặc số điện thoại" style="width:100%"></p><div class="row"><button class="btn" data-a="login-save">Lưu</button></div>');
+    else if (a === "cab-add") { if (S.cab.indexOf(v) < 0) S.cab.push(v); x.save(); x.render(); }
+    else if (a === "invite") { const u = location.href.split("#")[0], tx = "Cùng mình chăm da và giữ Streak với Cocoon nhé!"; if (navigator.share) navigator.share({ title: "Cocoon", text: tx, url: u }).catch(() => {}); else { try { navigator.clipboard.writeText(tx + " " + u); toast("Đã sao chép lời mời."); } catch (er) { toast(u); } } }
+    else if (a === "ext") x.modal('<h3>Sắp ra mắt</h3><p>Đường dẫn chính thức sẽ được cập nhật tại đây.</p>');
+    else if (a === "buy") window.open(buyUrl(x.sp), "_blank", "noopener");
+    else if (a === "steps2") { const p = x.sp; x.modal("<h3>Cách dùng đúng</h3>" + im(p === "buoi" ? "buoi_use" : "bidao_hero", C.products[p].name, "fg sq") + "<ol>" + ST2[p].map(z => "<li>" + z + "</li>").join("") + "</ol>"); }
+    else if (a === "prob") { const pr = PROB[v], o = pr[1] && C.products[pr[1]]; x.modal("<h3>" + pr[0] + "</h3>" + (o ? "<p><b>" + o.full + "</b></p><p>" + o.who + "</p>" : "<p>Bộ sản phẩm này chưa có sản phẩm dành riêng cho vấn đề này. Nếu da đầu ngứa nhiều, gàu kéo dài hoặc bong thành mảng, bạn nên hỏi bác sĩ hoặc đi khám da liễu.</p>") + '<div class="row"><a class="btn" href="#hoi-bac-si" data-a="close">Hỏi đáp cùng Bác sĩ</a></div>'); }
+    else if (a === "quiz" && [0, 1, 2, 3].some(i => !document.querySelector("input[name=q" + i + "]:checked"))) x.modal("<p>Bạn trả lời giúp mình 4 câu đầu nhé, để gợi ý sát với làn da của bạn hơn.</p>");
+    else if (a === "wipe") { E.noSeed = true; oa(a, v, t, x); x.S.v2 = 1; x.save(); x.render(); }
+    else if (a === "chat-send" || a === "chat-q") chat(x, a === "chat-q" ? v : (g("ci") ? g("ci").value : ""), a, v, t);
+    else oa(a, v, t, x);
+  };
+  document.addEventListener("change", ev => {
+    const t = ev.target; if (t.hasAttribute && t.hasAttribute("data-rg")) { const l = g("rgl"); if (l) l.href = mapUrl(t.value); return; }
+    if (t.dataset && t.dataset.plan) { const x = window.COCOON_CTX(), S = st(x.S); S.plan[t.dataset.plan] = t.value; x.save(); x.render(); }
+  });
+
+  const oAfter = E.after;
+  E.after = (r, x) => {
+    oAfter(r, x); const nav = g("nav"), l = nav.querySelector('a[href="#lich"]'); if (l) l.remove(); if (r === "lich") { const hn = nav.querySelector('a[href="#hom-nay"]'); if (hn) hn.classList.add("on"); const lc = g("lc"); if (lc) lc.scrollIntoView(); }
+    let f = g("fab"); if (!f) { f = document.createElement("div"); f.id = "fab"; f.innerHTML = '<a href="#hoi-bac-si" class="fb fd"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16v11H9l-5 4z"/><path d="M12 8v5M9.5 10.5h5"/></svg>Bác sĩ</a><a class="fb fm" target="_blank" rel="noopener" href="#">' + BAG.replace('width="22" height="22"', 'width="20" height="20"') + "Mua lại</a>"; document.body.appendChild(f); }
+    f.hidden = !(["hom-nay", "lich", "san-pham", "goi-y", "toi", "qua-tang"].includes(r) || C.products[r]);
+    const fm = f.querySelector(".fm"); if (fm) fm.href = buyUrl(x.sp);
+  };
+
+  let ly = 0; addEventListener("scroll", () => { const y = scrollY, f = g("fab"); if (!f) return; if (y > ly + 6 && y > 200) f.classList.add("hd"); else if (y < ly - 6) f.classList.remove("hd"); ly = y; }, { passive: true });
+  const css = document.createElement("style");
+  css.textContent = `:root{--mut:#5b5446;--line:#e6dcc4;--tint:color-mix(in srgb,var(--ac) 30%,#FEFBF4)}
+body{padding-bottom:calc(150px + env(safe-area-inset-bottom))}header em.slogan{display:block;font:italic 500 1rem Vollkorn,Georgia,serif;color:#4A3B32;margin-top:8px}
+#v>*{animation:rise .55s cubic-bezier(.2,.7,.2,1) both}#v>*:nth-child(2){animation-delay:.05s}#v>*:nth-child(3){animation-delay:.1s}#v>*:nth-child(n+4){animation-delay:.15s}@keyframes rise{from{opacity:0;transform:translateY(10px)}}
+.btn,.btn2,.chip-t,.cd,.fb{transition:transform .15s,background .2s,border-color .2s}.btn:active,.btn2:active,.chip-t:active,.fb:active{transform:scale(.97)}
+h2{margin:1.4em 0 .5em}.eyebrow{font:700 .75rem Nunito,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin:0 0 8px}.sm{font-size:.9rem;color:var(--mut)}
+.card,.auth,.stat,.lad,.rd,.cb{background:#fff;border:1px solid var(--line);border-radius:6px;box-shadow:none}.tip{border-radius:6px}.soft{border-radius:4px}
+.tag{display:inline-block;font:700 .72rem Nunito;letter-spacing:.04em;background:var(--tint);border:1px solid var(--line);border-radius:99px;padding:1px 9px;margin-left:6px;vertical-align:middle}
+.th{display:grid;margin:14px 0;background:var(--tint);border:1px solid var(--line);border-radius:6px;overflow:hidden}.th-i{position:relative;aspect-ratio:4/3;order:-1}.th-i img{width:100%;height:100%;object-fit:cover;display:block}.th-i span{position:absolute;left:0;right:0;bottom:0;padding:26px 14px 10px;background:linear-gradient(transparent,rgba(31,28,23,.6));color:#FEFBF4;font-size:.85rem}.th-m{padding:22px 20px}.th .q{font-size:1.6rem}
+.bdg{display:flex;align-items:center;gap:10px;min-height:48px;padding:6px 12px;border:1px solid var(--tw);border-radius:4px;background:#fff;color:var(--bk);text-decoration:none;font-weight:700;font-size:.92rem}.bdg em{margin-left:auto;font-style:normal;font-weight:400;color:var(--mut)}.bdg .seal{width:24px;height:24px;font-size:.8rem}
+.chips-t{display:grid;grid-template-columns:1fr 1fr;gap:8px}.chip-t{min-height:64px;display:flex;flex-wrap:wrap;align-items:center;gap:2px 8px;text-align:left;padding:10px 12px;border:1.5px solid var(--line);background:#fff;border-radius:4px;font:inherit;cursor:pointer;color:var(--bk)}.chip-t i{width:14px;height:14px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(31,28,23,.35)}.chip-t span{font-weight:700}.chip-t em{flex-basis:100%;font-style:normal;font-size:.8rem;color:var(--mut)}.chip-t[aria-pressed=true]{border-color:var(--bk);background:var(--tint)}.chip-t.dn{opacity:.7}
+.ck .btn{margin-top:14px}.lc{display:grid;gap:18px;margin-top:8px}.cal-h{display:flex;align-items:center;gap:10px}.cal-h h2{margin:0;flex:1;text-align:center}.cal-h .btn2{min-width:48px;padding:0}.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:10px}.cal em{font:700 .8rem Nunito;text-align:center;font-style:normal;color:var(--mut)}
+.cd{min-height:54px;background:#fff;border:1px solid var(--line);border-radius:4px;font:inherit;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}.cd.td{outline:2px solid var(--bk)}.cd.fu{opacity:.5}.cd span{display:flex;gap:2px;min-height:8px}.cd u,.cd s{width:8px;height:8px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(31,28,23,.4)}.cd s{box-shadow:none;border:1.5px dashed var(--bk)}
+.stat{padding:16px 18px}.big-n{font:italic 500 2.6rem/1.1 Vollkorn,serif;margin:0 0 10px}.big-n small{font:400 1rem Nunito}.sr{display:flex;gap:12px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}.sr>i{width:12px;height:12px;border-radius:50%;flex:none;box-shadow:inset 0 0 0 1px rgba(31,28,23,.35)}.sr>div{flex:1}.sr b{display:block}.sr small{display:block;color:var(--mut);font-size:.82rem}.sr strong{font:italic 500 1.6rem Vollkorn,serif}.sr strong small{display:inline;font:400 .8rem Nunito}.pg{margin-top:6px}
+.ladder,.reds{display:grid;gap:10px}.lad,.rd{display:flex;align-items:center;gap:12px;padding:12px 16px;flex-wrap:wrap}.lad b{font:italic 500 1.3rem Vollkorn,serif;min-width:80px}.lad span,.rd b{flex:1}.lad em,.rd span:not(.tag){font-style:normal;color:var(--mut)}.lad.ok{border-color:var(--tw);background:var(--tint)}.pts{margin-top:6px}
+.ptop{display:grid;gap:16px;margin:10px 0}.pt-r{order:-1}.bt{display:flex;flex-direction:column;line-height:1.3}.bt small{font-weight:400;color:var(--mut)}#fab{transition:transform .3s}#fab.hd{transform:translateX(130%)}.pt-r img{width:100%;border-radius:6px;display:block;aspect-ratio:4/3;object-fit:cover}.auth{padding:14px 16px;margin:14px 0}.au-h{display:flex;gap:12px;align-items:center}.au-h small{display:block;color:var(--mut)}
+.fg{width:100%;height:auto;border-radius:6px;display:block;margin:12px 0}.fg.sq{aspect-ratio:16/10;object-fit:cover}.fg.p{aspect-ratio:4/5;max-width:440px;margin:12px auto;object-fit:contain;background:#f7f1e3}
+.cb{display:flex;gap:14px;padding:12px;margin:10px 0}.th2{width:92px;height:116px;object-fit:cover;border-radius:4px;flex:none}
+.ptop h1{font-size:1.9rem}.chat{min-height:10vh}.cin{position:static}a.btn,a.btn2{text-decoration:none}.cvr{aspect-ratio:3/2;background:#A8D8C9;color:#2E4A3E;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}.cvr b{font:italic 500 1.7rem Vollkorn,Georgia,serif}.cvr span{font-size:.95rem}a.btn,a.btn2,.fb{text-decoration:none}.faq details p{margin:.5em 0}.faq summary{min-height:56px}
+#fab{position:fixed;right:12px;bottom:calc(80px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:8px;z-index:6}#fab[hidden]{display:none}.fb{min-height:46px;padding:0 14px;border-radius:24px;display:flex;align-items:center;gap:8px;font:700 .9rem Nunito,sans-serif;text-decoration:none;cursor:pointer;box-shadow:0 6px 18px rgba(31,28,23,.25)}.fd{background:var(--bk);color:var(--cr);border:0}.fm{background:var(--cr);color:var(--bk);border:1.5px solid var(--bk)}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(150px + env(safe-area-inset-bottom));background:var(--bk);color:var(--cr);padding:12px 16px;border-radius:4px;max-width:92vw;z-index:40;display:none;font-size:.95rem}#toast button{color:var(--cr);text-decoration:underline;background:none;border:0;font:inherit;font-weight:700;min-height:44px;cursor:pointer}
+.rd .tag{margin-left:auto}
+@media(min-width:700px){.chips-t{grid-template-columns:repeat(4,1fr)}.pr{grid-template-columns:repeat(5,1fr)}.ladder{grid-template-columns:repeat(4,1fr)}.lad{flex-direction:column;align-items:flex-start}.reds{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:900px){.ptop h1{font-size:2.6rem}body{padding-bottom:40px}.th{grid-template-columns:1fr 1fr}.th-i{order:0;aspect-ratio:auto;min-height:360px}.th-i img{position:absolute;inset:0}.th-m{padding:52px 48px;display:flex;flex-direction:column;justify-content:center}.th .q{font-size:2.1rem}.lc{grid-template-columns:1.15fr .85fr;align-items:start}.ptop{grid-template-columns:1.05fr .95fr;gap:40px;align-items:center}.pt-r{order:0}.pt-r img{aspect-ratio:4/5}#fab{right:24px;bottom:28px}#toast{bottom:30px}.ck .btn{width:auto}}`;
+  document.head.appendChild(css);
+})();
+</script>
+<script>(function () {
+  const C = window.COCOON_CONFIG, KEY = "cocoon.v1", $ = s => document.querySelector(s);
+  const Q = new URLSearchParams(location.search), demo = false; let sp = Q.get("sp");
+  const X = () => window.COCOON_EXTRA || {};
+  let S; try { S = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { S = {}; }
+  S.chk = S.chk || {}; S.rest = S.rest || {}; S.scans = S.scans || {}; S.off = S.off || 0;
+  if (!C.products[sp]) sp = C.products[location.hash.slice(1)] ? location.hash.slice(1) : S.sp;
+  if (C.products[sp]) S.sp = sp;
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
+  const now = () => { const d = new Date(); d.setDate(d.getDate() + S.off); return d; };
+  const key = d => d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+  const shift = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); return x; };
+  const parse = k => { const a = k.split("-"); return new Date(+a[0], a[1] - 1, +a[2]); };
+  const has = (p, k) => (S.chk[p] || []).includes(k), rest = (p, k) => (S.rest[p] || []).includes(k);
+  const msgOf = d => { let h = 0; for (const c of key(d)) h = (h * 31 + c.charCodeAt(0)) >>> 0; return C.messages[h % C.messages.length]; };
+  function streakAt(p, d) { let n = 0; while (has(p, key(d)) || rest(p, key(d))) { if (has(p, key(d))) n++; d = shift(d, -1); } return n; }
+  function streak(p) { let d = now(); if (!has(p, key(d)) && !rest(p, key(d))) d = shift(d, -1); return streakAt(p, d); }
+  const missed = p => (S.chk[p] || []).length && ![0, -1].some(i => { const k = key(shift(now(), i)); return has(p, k) || rest(p, k); });
+  const restLeft = p => C.REST_MAX - (S.rest[p] || []).filter(k => k.slice(0, 7) === key(now()).slice(0, 7)).length;
+
+  // Module xác thực riêng: sau này đổi sang chip NTAG 424 DNA chỉ cần thay hàm này.
+  const Verify = {
+    check(p) { if (S.demoAuth) return S.demoAuth; const l = C.products[p].lot; if (!l) return "unknown"; return (S.scans[l] || 0) >= C.AUTH_THRESHOLD ? "abnormal" : "ok"; },
+    count(p) { const l = C.products[p].lot, sk = "scan." + p; try { if (sessionStorage.getItem(sk)) return; sessionStorage.setItem(sk, 1); } catch (e) {} S.sd = S.sd || {}; const td = key(now()); if (S.sd[l] === td) return; S.sd[l] = td; S.scans[l] = (S.scans[l] || 0) + 1; save(); }
+  };
+
+  const bag = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8a3 3 0 0 1 6 0M12 11v5M9.5 13.5h5"/></svg>';
+  const ctx = () => ({ S, save, C, sp, now, key, shift, has, rest, streak, streakAt, modal, render, shareCard, msgOf, Verify });
+  window.COCOON_CTX = ctx;
+  const modal = h => { const m = document.createElement("div"); m.className = "modal"; m.setAttribute("role", "dialog"); m.innerHTML = "<div>" + h + '<div class="row"><button class="btn2" data-a="close">Đóng</button></div></div>'; document.body.appendChild(m); };
+
+  function confetti() {
+    if (matchMedia("(prefers-reduced-motion:reduce)").matches) return;
+    const b = document.createElement("div"); b.className = "cf";
+    for (let i = 0; i < 24; i++) { const s = document.createElement("i"); s.style.cssText = "left:" + Math.random() * 100 + "%;background:" + ["#C5A25D", C.products[sp].accent, "#F3C6D3"][i % 3] + ";animation-delay:" + Math.random() * .4 + "s"; b.appendChild(s); }
+    document.body.appendChild(b); setTimeout(() => b.remove(), 2600);
+  }
+
+  async function shareCard(msg) {
+    const p = C.products[sp]; try { await document.fonts.load("italic 500 56px Vollkorn"); await document.fonts.load("700 80px Quicksand"); } catch (e) {}
+    const c = document.createElement("canvas"); c.width = 1080; c.height = 1350; const x = c.getContext("2d");
+    x.fillStyle = p.accent; x.fillRect(0, 0, 1080, 1350); x.fillStyle = "#FEFBF4"; x.fillRect(60, 60, 960, 1230);
+    x.fillStyle = p.qc; x.textAlign = "center"; x.font = "italic 500 58px Vollkorn, Georgia, serif";
+    const lines = []; let l = ""; msg.split(" ").forEach(w => { const t = l ? l + " " + w : w; if (x.measureText(t).width > 800 && l) { lines.push(l); l = w; } else l = t; }); lines.push(l);
+    lines.forEach((t, i) => x.fillText(t, 540, 560 - (lines.length * 40) + i * 84));
+    x.fillStyle = "#C5A25D"; x.font = "700 40px Quicksand, sans-serif"; x.fillText("the", 540, 1100); x.font = "700 92px Quicksand, sans-serif"; x.fillText("cocoon", 540, 1180);
+    x.font = "700 24px Quicksand, sans-serif"; x.fillText("O R I G I N A L   V I E T N A M", 540, 1225);
+    c.toBlob(async b => {
+      const f = new File([b], "cocoon-thiep.png", { type: "image/png" });
+      try { if (navigator.canShare && navigator.canShare({ files: [f] })) { await navigator.share({ files: [f] }); return; } } catch (e) { return; }
+      const a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = "cocoon-thiep.png"; a.click();
+    });
+  }
+
+  function select() {
+    return '<h1>Bạn đang cầm sản phẩm nào?</h1><div class="grid">' + Object.keys(C.products).map(k => '<button class="pick" style="background:' + C.products[k].accent + '" data-a="pick" data-v="' + k + '">' + C.products[k].name + "</button>").join("") + "</div>";
+  }
+  function authCard(p) {
+    const s = Verify.check(p), o = C.products[p];
+    if (s !== "ok") return '<div class="auth bad"><strong>Sản phẩm có thể không chính hãng</strong><p>' + (s === "abnormal" ? "Chip này đã được quét nhiều lần bất thường." : "Mã này không có trong hệ thống.") + '</p><button class="btn2" data-a="report">Báo cáo sản phẩm</button><p>Hotline: ' + C.HOTLINE + "</p></div>";
+    return '<details class="auth"><summary>✔ Chính hãng Cocoon: ' + o.illus.replace(/\.$/, "") + "</summary><dl><dt>Số lô</dt><dd>" + o.lot + "</dd><dt>NSX</dt><dd>" + o.nsx + "</dd><dt>HSD</dt><dd>" + o.hsd + "</dd><dt>Cơ sở sản xuất</dt><dd>" + C.FACTORY + "</dd></dl><small>Dữ liệu minh họa</small></details>";
+  }
+  function today(p) {
+    Verify.count(p); const d = now(), k = key(d), done = has(p, k), rd = rest(p, k), n = streak(p);
+    return '<section class="hero"><p class="q">' + msgOf(d) + "</p></section>" +
+      '<div class="row">' + (done ? '<p class="ok">Hôm nay bạn đã chăm da rồi. Bạn đã chăm da ' + n + ' ngày liên tiếp.</p>' : rd ? '<p class="ok">Hôm nay là ngày nghỉ phép của bạn.</p>' : '<button class="btn" data-a="checkin">' + bag + "Mình đã chăm da xong</button>") +
+      '<button class="btn2" data-a="share">Lưu hoặc chia sẻ thiệp ảnh</button>' +
+      (!done && !rd && restLeft(p) > 0 ? '<button class="btn2" data-a="rest">Dùng ngày nghỉ phép (còn ' + restLeft(p) + ")</button>" : "") + "</div>" +
+      (missed(p) ? '<p class="soft">' + C.missed + "</p>" : "") + authCard(p) + (X().sos ? X().sos() : "");
+  }
+  function lich(p) {
+    const d = now(), y = d.getFullYear(), mo = d.getMonth(), len = new Date(y, mo + 1, 0).getDate(), off = (new Date(y, mo, 1).getDay() + 6) % 7; let cells = "";
+    for (let i = 0; i < off; i++) cells += "<i></i>";
+    for (let i = 1; i <= len; i++) { const k = key(new Date(y, mo, i)); cells += '<button class="day' + (has(p, k) ? " on" : "") + (rest(p, k) ? " rs" : "") + (k === key(d) ? " td" : "") + '" data-a="day" data-v="' + k + '" aria-label="Ngày ' + i + '">' + i + "</button>"; }
+    return "<h1>Tháng " + (mo + 1) + "/" + y + "</h1><p>Bạn đã chăm da " + streak(p) + ' ngày liên tiếp. Bấm vào một ngày để xem lời chúc. Ô nền màu là ngày đã chăm da, ô viền đứt là ngày nghỉ phép.</p><div class="cal">' + ["T2", "T3", "T4", "T5", "T6", "T7", "CN"].map(t => "<b>" + t + "</b>").join("") + cells + "</div>";
+  }
+  function sanpham(p) {
+    const o = C.products[p];
+    return '<header class="ph" style="text-align:left;color:inherit;font-weight:400;padding:10px 0"><h1>' + o.title + '</h1><p class="q">' + o.quote + '</p><p class="chip">' + o.illus + "</p></header>" +
+      '<div class="two"><div><h2>Dành cho ai?</h2><p>' + o.who + "</p><h4>Phù hợp với</h4><p>" + o.fit + "</p><h2>Công dụng thực tế</h2><h4>Bạn có thể kỳ vọng</h4><p>" + o.expect + '</p></div><div><h4 id="ing">' + o.ingLabel + "</h4><p>" + o.ing + '</p><h4 id="org">Nguồn gốc</h4><p>' + o.origin + "</p><h4>Cách dùng</h4><p>" + o.usage + '</p><aside class="tip"><h3>' + o.tipLabel + "</h3><p>" + o.tip + "</p></aside></div></div>" +
+      '<div class="row">' + o.btns.map(b => '<button class="btn2" data-a="' + b.a + '" data-v="' + (b.v || "") + '">' + b.t + "</button>").join("") + '</div><p class="soft">' + C.safe + "</p>";
+  }
+
+  function render() {
+    const nav = $("#nav"), v = $("#v");
+    if (!C.products[sp]) sp = "bidao";
+    const p = C.products[sp], r = location.hash.replace(/^#\/?/, "") || "hom-nay";
+    document.documentElement.style.setProperty("--ac", p.accent); document.documentElement.style.setProperty("--qc", p.qc);
+    const tabs = [["hom-nay", "Hôm nay"], ["lich", "Lịch"], ["san-pham", "Sản phẩm"], ["goi-y", "Gợi ý"], ["toi", "Tôi"]];
+    nav.innerHTML = tabs.map(t => '<a href="#' + t[0] + '"' + (t[0] === r ? ' class="on"' : "") + ">" + t[1] + "</a>").join("");
+    const PG = X().pages || {}, ex = PG[r] || (C.products[r] ? PG["hom-nay"] : r === "lich" ? null : PG._); v.innerHTML = ex ? ex(ctx()) : r === "lich" ? lich(sp) : today(sp); if (X().after) X().after(r, ctx());
+  }
+
+  document.addEventListener("click", e => {
+    const t = e.target.closest("[data-a]"); if (!t) return; const a = t.dataset.a, v = t.dataset.v, p = sp && C.products[sp] ? sp : null;
+    if (a === "close") t.closest(".modal").remove();
+    else if (a === "pick") location.hash = "#" + v;
+    else if (a === "checkin") {
+      const k = key(now()); (S.chk[p] = S.chk[p] || []).push(k); save(); render(); confetti();
+      const n = streak(p); if (X().onCheckin) X().onCheckin(p, n, ctx()); if (C.milestones[n]) modal('<h2>Mốc ' + n + ' ngày</h2><p class="q">' + C.milestones[n] + "</p>");
+    } else if (a === "rest") { (S.rest[p] = S.rest[p] || []).push(key(now())); save(); render(); }
+    else if (a === "share") shareCard(msgOf(now()));
+    else if (a === "day") { const d = parse(v), n = has(p, v) ? streakAt(p, d) : 0; modal("<h3>" + d.getDate() + "/" + (d.getMonth() + 1) + '</h3><p class="q">' + msgOf(d) + "</p>" + (has(p, v) ? "<p>Ngày này bạn đã chăm da.</p>" : "") + (C.milestones[n] ? '<p class="soft">' + C.milestones[n] + "</p>" : "")); }
+    else if (a === "video") modal('<div class="vid">▶</div><p>Video hướng dẫn sắp ra mắt</p>');
+    else if (a === "steps") modal("<h3>3 bước dùng đúng</h3><ol>" + C.products[p].steps.map(s => "<li>" + s + "</li>").join("") + "</ol>");
+    else if (a === "go") { const el = document.getElementById(v); if (el) el.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion:reduce)").matches ? "auto" : "smooth" }); }
+    else if (a === "report") modal('<h3>Báo cáo sản phẩm</h3><textarea placeholder="Mô tả nơi bạn mua và điều bạn thấy lạ"></textarea><div class="row"><button class="btn" data-a="sent">Gửi báo cáo</button></div><p>Hotline: ' + C.HOTLINE + "</p>");
+    else if (a === "sent") t.closest(".modal > div").innerHTML = '<p>Cảm ơn bạn, nhóm đã nhận báo cáo.</p><button class="btn2" data-a="close">Đóng</button>';
+    else if (a === "d-auth") { S.demoAuth = v || null; save(); render(); }
+    else if (a === "d-day") { S.off += 1; save(); render(); }
+    else if (a === "d-miss") { S.off += 2; save(); render(); }
+    else if (a === "d-ms") { const n = +v, d = now(), k = key(d); S.chk[p] = (S.chk[p] || []).filter(x => x !== k); for (let i = 1; i < n; i++) { const x = key(shift(d, -i)); if (!S.chk[p].includes(x)) S.chk[p].push(x); } save(); render(); }
+    else if (a === "d-clear") { S = { chk: {}, rest: {}, scans: {}, off: 0 }; save(); try { sessionStorage.clear(); } catch (e) {} render(); }
+    else if (a === "d-sp") location.hash = "#" + v;
+    else if (X().act) X().act(a, v, t, ctx());
+  });
+  window.addEventListener("hashchange", () => { const h = location.hash.slice(1); if (C.products[h]) { sp = h; S.sp = h; save(); } render(); window.scrollTo(0, 0); });
+
+  if (demo) {
+    const d = $("#demo"); d.hidden = false;
+    d.innerHTML = '<details><summary>Bảng demo</summary>' + Object.keys(C.products).map(k => '<button data-a="d-sp" data-v="' + k + '">' + C.products[k].name.split(" ")[0] + "</button>").join("") +
+      '<br><button data-a="d-auth" data-v="">Chính hãng</button><button data-a="d-auth" data-v="abnormal">Quét bất thường</button><button data-a="d-auth" data-v="unknown">Mã không có</button><br><button data-a="d-day">Qua 1 ngày</button><button data-a="d-miss">Lỡ 1 ngày</button><br>' +
+      [7, 14, 30, 100].map(n => '<button data-a="d-ms" data-v="' + n + '">Mốc ' + n + "</button>").join("") + '<br><button data-a="d-wrapped">Thử Wrapped</button><button data-a="d-gift">Quà tặng (người nhận)</button><br><button data-a="d-admin">Admin</button><button data-a="d-clear">Xóa dữ liệu</button></details>';
+  }
+  render();
+})();
+</script>
+
+</body>
+</html>
